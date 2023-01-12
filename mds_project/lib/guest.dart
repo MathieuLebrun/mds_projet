@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'login.dart';
 import 'testGif.dart';
+import 'home.dart';
 
 class GuestScreen extends StatefulWidget {
   const GuestScreen({Key? key}) : super(key: key);
@@ -44,6 +45,7 @@ class _GuestScreenState extends State<GuestScreen> {
               })),
       testGifScreen(
           onChangedStep: (index) => setState(() => _indexSelected = index)),
+      HomeScreen(),
     ]);
   }
 

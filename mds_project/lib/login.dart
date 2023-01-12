@@ -24,7 +24,7 @@ class _LoginScreenState extends State<LoginScreen> {
           child: SingleChildScrollView(
             child: Center(
               child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+                  //  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
                       'Connexion'.toUpperCase(),
@@ -91,7 +91,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     ),
                     ElevatedButton(
                       onPressed: () => {
-                        widget.onChangedStep(1, _login, _motdepasse),
+                        widget.onChangedStep(2, _login, _motdepasse),
                       },
                       child: Text(
                         'envoyer'.toUpperCase(),
