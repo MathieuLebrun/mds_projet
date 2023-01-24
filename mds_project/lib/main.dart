@@ -2,12 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 
 import 'guest.dart';
+import 'test3D.dart';
 
 void main() async {
   // ? async parce que genre faut attendre que sa charge la connexion avec la base
   WidgetsFlutterBinding
       .ensureInitialized(); //  ? EN GROS  on lance une application donc un main qui a pour context une premier vue genre un layout
-  // await Firebase.initializeApp();    // !  la faut que je rajoute les dependencies pour relier a la base fire base https://console.firebase.google.com/project/mydigitalproject/overview
+  await Firebase
+      .initializeApp(); // !  la faut que je rajoute les dependencies pour relier a la base fire base https://console.firebase.google.com/project/mydigitalproject/overview
   runApp(const MyApp());
 }
 

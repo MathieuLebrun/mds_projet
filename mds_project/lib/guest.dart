@@ -1,10 +1,12 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:mds_project/inscription.dart';
 
 import 'login.dart';
 import 'testGif.dart';
 
 class GuestScreen extends StatefulWidget {
-  const GuestScreen({Key? key}) : super(key: key);
+  GuestScreen({Key? key}) : super(key: key);
 
   @override
   _GuestScreenState createState() => _GuestScreenState();
@@ -12,7 +14,7 @@ class GuestScreen extends StatefulWidget {
 
 class _GuestScreenState extends State<GuestScreen> {
   //  ? Donc pareil ma classe gestionnaire elle a des parametres
-  List<Widget> _widget = []; // ? Ajout des liste des differentes views
+  final List<Widget> _widget = []; // ? Ajout des liste des differentes views
   int _indexSelected =
       0; // ? Initialisation de la vue on va trier les differents ecran avec un index pour juste passer de l'écran 2 au 3
   final String _login = ''; // ? login mdp sa sera juste pour verif sur la base
@@ -32,18 +34,35 @@ class _GuestScreenState extends State<GuestScreen> {
                 if (value != null) {
                   // ? la normalement je verifie que les valeurs recupérer depuis login screen
                   // si la valeur des champs et differents de null test authentification de l'utilisateur
-                  //_userService.auth(UserModel(
-                  //     login: value,
-                  //   motdepasse:value1,
-                  //  ))
-                  //     .then(
-                  (value) => print(value.toJson())
-                      // )
-                      ;
+                  print(value);
+                  print(value1);
+                  FirebaseAuth.instance.signInWithEmailAndPassword(
+                      email: value, password: value1);
                 }
               })),
       testGifScreen(
           onChangedStep: (index) => setState(() => _indexSelected = index)),
+      InscriptionScreen(
+          onChangedStep: (index, value, value1) => setState(() {
+                // ? avec sa méthode set state qui permets du coup de remodifier index
+                _indexSelected =
+                    index; //? cette méthode sera utiliser des que je serai depuis l'écran login pour pouvoir aller sur un autre ecran donc je recupererai 2 attribut un mdp un login et un index pour savoir la page a afficher
+                print(value);
+                print(value1);
+                if (value != null) {
+                  // ? la normalement je verifie que les valeurs recupérer depuis login screen
+                  // si la valeur des champs et differents de null test authentification de l'utilisateur
+                  FirebaseAuth.instance.createUserWithEmailAndPassword(
+                      email: value, password: value1);
+                  /*
+                  userService
+                      .auth(UserModel(
+                        login: value,
+                        motdepasse: value1,
+                      ))
+                      .then((value) => print(value.toJson())); */
+                }
+              })),
     ]);
   }
 

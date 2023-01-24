@@ -24,7 +24,7 @@ class _LoginScreenState extends State<LoginScreen> {
           child: SingleChildScrollView(
             child: Center(
               child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+                  // crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
                       'Connexion'.toUpperCase(),
@@ -95,6 +95,17 @@ class _LoginScreenState extends State<LoginScreen> {
                       },
                       child: Text(
                         'envoyer'.toUpperCase(),
+                        style: const TextStyle(
+                          color: Colors.white,
+                        ),
+                      ),
+                    ),
+                    ElevatedButton(
+                      onPressed: () => {
+                        widget.onChangedStep(2, _login, _motdepasse),
+                      },
+                      child: Text(
+                        'Frérot tu veux inscrire ?'.toUpperCase(),
                         style: const TextStyle(
                           color: Colors.white,
                         ),
