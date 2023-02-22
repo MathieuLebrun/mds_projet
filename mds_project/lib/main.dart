@@ -21,7 +21,7 @@ class MyApp extends StatelessWidget {
     return const MaterialApp(
       title: 'Flutter Demo',
       home:
-          GuestScreen(), //   ? Du coup en vue principal on lui dit d'aller au gestionnaire de view
+          GuestScreen(), //   ? Du coup en vue principal on lui dit d'aller au gestionnaire de view1
     );
   }
 }

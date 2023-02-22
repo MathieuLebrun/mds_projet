@@ -40,28 +40,17 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
-        child:Row(
-          children: [
-            Column(
-              children: (
-                child: Text(
-                  'Connexion'.toUpperCase(),
-                  style: const TextStyle(
-                    fontSize: 30,
-                  ),
-                ),
-              )
-              
+        child: Row(children: <Widget>[
+          Column(children: <Widget>[
+            Text(
+              'Connexion'.toUpperCase(),
+              style: const TextStyle(
+                fontSize: 30,
+              ),
             ),
-            Column(
-
-            ),
-          ],
-        )
-         
-
+          ])
+        ]),
       ),
-    
       bottomNavigationBar: BottomNavigationBar(
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
@@ -82,7 +71,7 @@ class _HomeScreenState extends State<HomeScreen> {
           BottomNavigationBarItem(
             icon: Icon(Icons.settings),
             label: 'Paramètre',
-            backgroundColor: Colors.pink, 
+            backgroundColor: Colors.pink,
           ),
         ],
         currentIndex: _selectedIndex,

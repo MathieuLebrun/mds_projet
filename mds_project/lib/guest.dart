@@ -3,10 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:mds_project/inscription.dart';
 
 import 'login.dart';
+import 'mainScreen.dart';
 import 'testGif.dart';
 
 class GuestScreen extends StatefulWidget {
-  GuestScreen({Key? key}) : super(key: key);
+  const GuestScreen({Key? key}) : super(key: key);
 
   @override
   _GuestScreenState createState() => _GuestScreenState();
@@ -30,16 +31,9 @@ class _GuestScreenState extends State<GuestScreen> {
                 // ? avec sa méthode set state qui permets du coup de remodifier index
                 _indexSelected =
                     index; //? cette méthode sera utiliser des que je serai depuis l'écran login pour pouvoir aller sur un autre ecran donc je recupererai 2 attribut un mdp un login et un index pour savoir la page a afficher
-
-                if (value != null) {
-                  // ? la normalement je verifie que les valeurs recupérer depuis login screen
-                  // si la valeur des champs et differents de null test authentification de l'utilisateur
-                  print(value);
-                  print(value1);
-                  FirebaseAuth.instance.signInWithEmailAndPassword(
-                      email: value, password: value1);
-                }
               })),
+      mainScreen(
+          onChangedStep: (index) => setState(() => _indexSelected = index)),
       testGifScreen(
           onChangedStep: (index) => setState(() => _indexSelected = index)),
       InscriptionScreen(
@@ -47,8 +41,7 @@ class _GuestScreenState extends State<GuestScreen> {
                 // ? avec sa méthode set state qui permets du coup de remodifier index
                 _indexSelected =
                     index; //? cette méthode sera utiliser des que je serai depuis l'écran login pour pouvoir aller sur un autre ecran donc je recupererai 2 attribut un mdp un login et un index pour savoir la page a afficher
-                print(value);
-                print(value1);
+
                 if (value != null) {
                   // ? la normalement je verifie que les valeurs recupérer depuis login screen
                   // si la valeur des champs et differents de null test authentification de l'utilisateur
