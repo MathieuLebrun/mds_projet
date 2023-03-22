@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:mds_project/inscription.dart';
+import 'package:mds_project/quizzScreen.dart';
 
 import 'login.dart';
 import 'mainScreen.dart';
@@ -25,17 +26,7 @@ class _GuestScreenState extends State<GuestScreen> {
     // ? La méthode init state c'est une méthode lancer une seule fois quand on arriver dans une view donc au lancement dans l'app on va dans le gestionnaire puis cette methode utiliser qu'une fois
     super.initState();
     _widget.addAll([
-      // ? on ajoute donc a l'attribut de list tableau de vue vide l'écran login
-      LoginScreen(
-          onChangedStep: (index, value, value1) => setState(() {
-                // ? avec sa méthode set state qui permets du coup de remodifier index
-                _indexSelected =
-                    index; //? cette méthode sera utiliser des que je serai depuis l'écran login pour pouvoir aller sur un autre ecran donc je recupererai 2 attribut un mdp un login et un index pour savoir la page a afficher
-              })),
-      mainScreen(
-          onChangedStep: (index) => setState(() => _indexSelected = index)),
-      testGifScreen(
-          onChangedStep: (index) => setState(() => _indexSelected = index)),
+      /*
       InscriptionScreen(
           onChangedStep: (index, value, value1) => setState(() {
                 // ? avec sa méthode set state qui permets du coup de remodifier index
@@ -56,6 +47,19 @@ class _GuestScreenState extends State<GuestScreen> {
                       .then((value) => print(value.toJson())); */
                 }
               })),
+      // ? on ajoute donc a l'attribut de list tableau de vue vide l'écran login  */
+      LoginScreen(
+          onChangedStep: (index, value, value1) => setState(() {
+                // ? avec sa méthode set state qui permets du coup de remodifier index
+                _indexSelected =
+                    index; //? cette méthode sera utiliser des que je serai depuis l'écran login pour pouvoir aller sur un autre ecran donc je recupererai 2 attribut un mdp un login et un index pour savoir la page a afficher
+              })),
+      mainScreen(
+          onChangedStep: (index) => setState(() => _indexSelected = index)),
+      testGifScreen(
+          onChangedStep: (index) => setState(() => _indexSelected = index)),
+      quizzScreen(
+          onChangedStep: (index) => setState(() => _indexSelected = index)),
     ]);
   }
 

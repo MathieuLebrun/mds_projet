@@ -45,6 +45,7 @@ dependencies:
   snippet_coder_utils: ^1.0.9
   http: ^0.13.5
   shared_preferences: ^2.0.17
+  flame: ^1.6.0
 
   # model_viewer: ^0.8.1
 
@@ -76,6 +77,14 @@ flutter:
     - assets/testv2.glb
     - assets/google.jpg
     - assets/fb.jpg
+    - assets/test.jpg
+    - assets/testcarr.jpg
+    - assets/gifdanseshelou.gif
+    - assets/gifdanseshelou2.gif
+    - assets/images/pn2.png
+    - assets/images/background.png
+    - assets/images/sprintesheet.png
+    - assets/images/background2.png
   # To add assets to your application, add an assets section, like this:
   # assets:
   #   - images/a_dot_burr.jpeg
