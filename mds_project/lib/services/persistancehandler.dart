@@ -11,4 +11,15 @@ class PersistanceHandler {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     return prefs.getString("persistentTokenEDP");
   }
+
+  Future<String> setID(String value) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setString("ID", value);
+    return value;
+  }
+
+  Future<String?> getID() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    return prefs.getString("ID");
+  }
 }

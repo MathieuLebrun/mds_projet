@@ -11,6 +11,12 @@
             "type": "dart",
             "request": "launch",
             "program": "lib\\main.dart"
+        },
+        {
+            "name": "Flutter (lib\\mainScreen.dart)",
+            "type": "dart",
+            "request": "launch",
+            "program": "lib\\mainScreen.dart"
         }
     ]
 }

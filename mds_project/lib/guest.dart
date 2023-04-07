@@ -1,11 +1,11 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:mds_project/inscription.dart';
-import 'package:mds_project/quizzScreen.dart';
 
 import 'login.dart';
 import 'mainScreen.dart';
 import 'testGif.dart';
+import 'views/accueilScreen.dart';
 
 class GuestScreen extends StatefulWidget {
   const GuestScreen({Key? key}) : super(key: key);
@@ -26,39 +26,24 @@ class _GuestScreenState extends State<GuestScreen> {
     // ? La méthode init state c'est une méthode lancer une seule fois quand on arriver dans une view donc au lancement dans l'app on va dans le gestionnaire puis cette methode utiliser qu'une fois
     super.initState();
     _widget.addAll([
-      /*
+      AccueilScreen(
+          onChangedStep: (index) => setState(() => _indexSelected = index)),
       InscriptionScreen(
           onChangedStep: (index, value, value1) => setState(() {
                 // ? avec sa méthode set state qui permets du coup de remodifier index
                 _indexSelected =
                     index; //? cette méthode sera utiliser des que je serai depuis l'écran login pour pouvoir aller sur un autre ecran donc je recupererai 2 attribut un mdp un login et un index pour savoir la page a afficher
-
-                if (value != null) {
-                  // ? la normalement je verifie que les valeurs recupérer depuis login screen
-                  // si la valeur des champs et differents de null test authentification de l'utilisateur
-                  FirebaseAuth.instance.createUserWithEmailAndPassword(
-                      email: value, password: value1);
-                  /*
-                  userService
-                      .auth(UserModel(
-                        login: value,
-                        motdepasse: value1,
-                      ))
-                      .then((value) => print(value.toJson())); */
-                }
               })),
-      // ? on ajoute donc a l'attribut de list tableau de vue vide l'écran login  */
+      // ? on ajoute donc a l'attribut de list tableau de vue vide l'écran login
       LoginScreen(
           onChangedStep: (index, value, value1) => setState(() {
                 // ? avec sa méthode set state qui permets du coup de remodifier index
                 _indexSelected =
-                    index; //? cette méthode sera utiliser des que je serai depuis l'écran login pour pouvoir aller sur un autre ecran donc je recupererai 2 attribut un mdp un login et un index pour savoir la page a afficher
+                    index; // ? cette méthode sera utiliser des que je serai depuis l'écran login pour pouvoir aller sur un autre ecran donc je recupererai 2 attribut un mdp un login et un index pour savoir la page a afficher
               })),
       mainScreen(
           onChangedStep: (index) => setState(() => _indexSelected = index)),
       testGifScreen(
-          onChangedStep: (index) => setState(() => _indexSelected = index)),
-      quizzScreen(
           onChangedStep: (index) => setState(() => _indexSelected = index)),
     ]);
   }

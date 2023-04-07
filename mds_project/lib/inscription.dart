@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import '../services/api_service.dart';
-import '../config.dart';
 import 'home.dart';
 import 'login.dart';
 import 'models/register_request_model.dart';
@@ -23,8 +22,20 @@ class _InscriptionScreenState extends State<InscriptionScreen> {
   bool _isSecret = true; // ? boolean pour cacher le mdp je crois
   final emailcontroller = TextEditingController();
   final mdpcontroller = TextEditingController();
-  late String MessageErreur;
+
+  var dropdownValue = "";
+  List<String> listDropDownWhereToSend = [];
+
+  String MessageErreur = "";
+
+  final mdpusername = TextEditingController();
+
   @override
+  initState() {
+    setDropDownWhereToSend();
+    dropdownValue = listDropDownWhereToSend[0];
+  }
+
   Widget build(BuildContext context) {
     return Scaffold(
       body: AnnotatedRegion<SystemUiOverlayStyle>(
@@ -36,25 +47,25 @@ class _InscriptionScreenState extends State<InscriptionScreen> {
               Container(
                 height: double.infinity,
                 width: double.infinity,
-                decoration: BoxDecoration(
+                decoration: const BoxDecoration(
                   gradient: LinearGradient(
                     begin: Alignment.topCenter,
                     end: Alignment.bottomCenter,
                     colors: [
-                      Color(0xFF73AEF5),
-                      Color(0xFF61A4F1),
-                      Color(0xFF478DE0),
-                      Color(0xFF398AE5),
+                      Color(0xFFDD6CFF),
+                      Color(0xFFF295FF),
+                      Color(0xFFF295FF),
+                      Color(0xFFF8C6FF),
                     ],
                     stops: [0.1, 0.4, 0.7, 0.9],
                   ),
                 ),
               ),
-              Container(
+              SizedBox(
                 height: double.infinity,
                 child: SingleChildScrollView(
-                  physics: AlwaysScrollableScrollPhysics(),
-                  padding: EdgeInsets.symmetric(
+                  physics: const AlwaysScrollableScrollPhysics(),
+                  padding: const EdgeInsets.symmetric(
                     horizontal: 40.0,
                     vertical: 120.0,
                   ),
@@ -65,7 +76,13 @@ class _InscriptionScreenState extends State<InscriptionScreen> {
                         IconButton(
                           icon: const Icon(size: 35, Icons.arrow_back_sharp),
                           onPressed: () {
-                            widget.onChangedStep(0, "", "");
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => LoginScreen(
+                                          onChangedStep:
+                                              (inta, stringa, string) {},
+                                        )));
                           },
                         ),
                       ]),
@@ -87,7 +104,15 @@ class _InscriptionScreenState extends State<InscriptionScreen> {
                       const SizedBox(
                         height: 30,
                       ),
-                      _buildInscInBtn()
+                      _buildUserName(),
+                      const SizedBox(
+                        height: 30,
+                      ),
+                      _buildAnn(),
+                      const SizedBox(
+                        height: 30,
+                      ),
+                      _buildInscInBtn(),
                     ],
                   ),
                 ),
@@ -136,31 +161,60 @@ class _InscriptionScreenState extends State<InscriptionScreen> {
   }
 
   Future<bool> _signInWithGoogle() async {
+    int valeurclasse = 3;
+    switch (int.parse(dropdownValue[0])) {
+      case 5:
+        {
+          valeurclasse = 5;
+        }
+        break;
+
+      case 3:
+        {
+          valeurclasse = 3;
+        }
+        break;
+      case 6:
+        {
+          valeurclasse = 6;
+        }
+        break;
+      case 4:
+        {
+          valeurclasse = 4;
+        }
+        break;
+
+      default:
+        {
+          //statements;
+        }
+        break;
+    }
+
     RegisterRequestModel model = RegisterRequestModel(
-      username: emailcontroller.text,
+      username: mdpusername.text,
       password: mdpcontroller.text,
       email: emailcontroller.text,
+      classe: valeurclasse.toString(),
     );
 
-    APIService.register(model).then(
-      (response) {
-        setState(() {});
-        if (response.data != null) {
-          showInSnackBar("✅");
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-                builder: (context) => LoginScreen(
-                      onChangedStep: (inta, stringa, string) {},
-                    )),
-          );
-        } else {
-          MessageErreur = "Erreur de connexion ";
-          showInSnackBar(MessageErreur);
-          return false;
-        }
-      },
-    );
+    String marcel = await APIService.register(model);
+    if (marcel != "404") {
+      showInSnackBar("✅");
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+            builder: (context) => LoginScreen(
+                  onChangedStep: (inta, stringa, string) {},
+                )),
+      );
+    } else {
+      MessageErreur = "Erreur de connexion ";
+      showInSnackBar(MessageErreur);
+      return false;
+    }
+
     return false;
   }
 
@@ -169,32 +223,42 @@ class _InscriptionScreenState extends State<InscriptionScreen> {
         .showSnackBar(SnackBar(content: Text(message)));
   }
 
+  Color getColor(Set<MaterialState> states) {
+    const Set<MaterialState> interactiveStates = <MaterialState>{
+      MaterialState.pressed,
+      MaterialState.hovered,
+      MaterialState.focused,
+    };
+    if (states.any(interactiveStates.contains)) {
+      return const Color(0xFFDD45F2);
+    }
+    return const Color(0xFFDD45F2);
+  }
+
   Widget _buildInscInBtn() {
     return Container(
       padding: const EdgeInsets.symmetric(vertical: 25.0),
       width: double.infinity,
       child: ElevatedButton(
+        style: ButtonStyle(
+          backgroundColor: MaterialStateProperty.resolveWith(getColor),
+        ),
         // elevation: 5.0,
         onPressed: () async => {
           if (await _signInWithGoogle())
             {widget.onChangedStep(1, "", "")}
           else
-            {
-              showDialog(
-                context: context,
-                builder: (BuildContext context) => _buildPopupDialog(context),
-              )
-            },
+            {},
         },
         //padding: EdgeInsets.all(15.0),
         /* shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(30.0),
         ), */
         // color: Colors.white,
-        child: Text(
+        child: const Text(
           'Valider',
           style: TextStyle(
-            color: Color(0xFF527DAA),
+            color: Colors.white,
             letterSpacing: 1.5,
             fontSize: 18.0,
             fontWeight: FontWeight.bold,
@@ -205,22 +269,88 @@ class _InscriptionScreenState extends State<InscriptionScreen> {
     );
   }
 
-  Widget _buildPopupDialog(BuildContext context) {
-    return AlertDialog(
-      title: const Text('Popup example'),
-      content: Column(
-        mainAxisSize: MainAxisSize.min,
+  void setDropDownWhereToSend() {
+    listDropDownWhereToSend.add("6ème");
+    listDropDownWhereToSend.add("5ème");
+    listDropDownWhereToSend.add("4ème");
+    listDropDownWhereToSend.add("3ème");
+  }
+
+  Widget _buildAnn() {
+    return Container(
+      alignment: Alignment.centerLeft,
+      padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
+      child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          Text(MessageErreur),
+          Text(
+            'Sélectionnez une année',
+            style: kLabelStyle,
+          ),
+          Container(
+            padding: const EdgeInsets.fromLTRB(15, 0, 0, 0),
+            child: DropdownButton<String>(
+              dropdownColor: const Color(0xFFF295FF),
+              value: dropdownValue,
+              items: listDropDownWhereToSend
+                  .map<DropdownMenuItem<String>>((String value) {
+                return DropdownMenuItem<String>(
+                  value: value,
+                  child: Text(
+                    value,
+                    style: const TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white),
+                  ),
+                );
+              }).toList(),
+              // Step 5.
+              onChanged: (String? newValue) {
+                setState(() {
+                  dropdownValue = newValue!;
+                });
+              },
+            ),
+          ),
         ],
       ),
-      actions: <Widget>[
-        ElevatedButton(
-          onPressed: () {
-            Navigator.of(context).pop();
-          },
-          child: const Text('Close'),
+    );
+  }
+
+  Widget _buildUserName() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: <Widget>[
+        Text(
+          "Nom d'utilisateur",
+          style: kLabelStyle,
+        ),
+        SizedBox(height: 10.0),
+        Container(
+          alignment: Alignment.centerLeft,
+          decoration: kBoxDecorationStyle,
+          height: 60.0,
+          child: TextField(
+            controller: mdpusername,
+            style: TextStyle(
+              color: Colors.white,
+              fontFamily: 'OpenSans',
+            ),
+            decoration: const InputDecoration(
+              border: InputBorder.none,
+              contentPadding: EdgeInsets.only(top: 14.0),
+              prefixIcon: Icon(
+                Icons.lock,
+                color: Color(0xFFDD45F2),
+              ),
+              hintText: "Entrez votre nom d'utilisateur",
+              hintStyle: TextStyle(
+                color: Colors.white54,
+                fontFamily: 'OpenSans',
+              ),
+            ),
+          ),
         ),
       ],
     );

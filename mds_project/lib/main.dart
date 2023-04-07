@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/services.dart';
 import 'guest.dart';
-import 'test3D.dart';
+
 
 void main() async {
   // ? async parce que genre faut attendre que sa charge la connexion avec la base

@@ -16,6 +16,8 @@ import 'package:http/http.dart' as http;
 import '../services/api_service.dart';
 import '../config.dart';
 import '../models/login_request_model.dart';
+import '../mainScreen.Dart';
+import '../models/login_response_model.dart';
 
 class LoginScreen extends StatefulWidget {
   final Function(int, String, String)
@@ -141,9 +143,11 @@ class _LoginScreenState extends State<LoginScreen> {
       password: mdpcontroller.text,
     );
 
-    String marcel = await APIService.login(model);
-    if (marcel != "404") {
-      PersistanceHandler().setTokenEDP(marcel);
+    var response = await APIService.login(model);
+    if (response.statusCode == 200) {
+      var loginResponse = loginResponseJson(response.body);
+      PersistanceHandler().setTokenEDP(loginResponse.accesToken);
+      PersistanceHandler().setID(loginResponse.id);
       return true;
     } else {
       MessageErreur = "Connexion refusé";
@@ -273,7 +277,14 @@ class _LoginScreenState extends State<LoginScreen> {
         // elevation: 5.0,
         onPressed: () async => {
           if (await _signInWithGoogle())
-            {widget.onChangedStep(1, "", "")}
+            {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => mainScreen(
+                            onChangedStep: (Z) {},
+                          ))),
+            }
           else
             {},
         },
