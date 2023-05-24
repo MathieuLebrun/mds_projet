@@ -106,19 +106,36 @@ class _draganddropScreenState extends State<draganddropScreen>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Math Game'),
-      ),
+      appBar: AppBar(),
       body: (dataIsready)
           ? Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      "Progression",
+                      style: TextStyle(
+                        color: Colors.black,
+                        letterSpacing: 1.5,
+                        fontSize: 18.0,
+                        fontWeight: FontWeight.bold,
+                        fontFamily: 'Asdean',
+                      ),
+                    ),
+                    SizedBox(
+                      height: 75,
+                    )
+                  ],
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Container(
                       width: 80,
                       child: Text(
-                        'Score 1:',
+                        'Anglais :',
                         style: TextStyle(fontSize: 18),
                       ),
                     ),
@@ -139,16 +156,17 @@ class _draganddropScreenState extends State<draganddropScreen>
                       ),
                     ),
                     SizedBox(width: 10),
-                    Text('${_animation1.value.toInt()}'),
+                    Text(scoreanglais.toString()),
                   ],
                 ),
                 SizedBox(height: 20),
                 Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Container(
                       width: 80,
                       child: Text(
-                        'Score 2:',
+                        'Français:',
                         style: TextStyle(fontSize: 18),
                       ),
                     ),
@@ -169,16 +187,17 @@ class _draganddropScreenState extends State<draganddropScreen>
                       ),
                     ),
                     SizedBox(width: 10),
-                    Text('${_animation2.value.toInt()}'),
+                    Text(scorefrancais.toString()),
                   ],
                 ),
                 SizedBox(height: 20),
                 Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Container(
                       width: 80,
                       child: Text(
-                        'Score 3:',
+                        'Math :',
                         style: TextStyle(fontSize: 18),
                       ),
                     ),
@@ -199,7 +218,7 @@ class _draganddropScreenState extends State<draganddropScreen>
                       ),
                     ),
                     SizedBox(width: 10),
-                    Text('${_animation3.value.toInt()}'),
+                    Text(scoremath.toString()),
                   ],
                 ),
               ],
