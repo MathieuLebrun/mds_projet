@@ -1,4 +1,3 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:mds_project/inscription.dart';
 
@@ -19,13 +18,14 @@ class _GuestScreenState extends State<GuestScreen> {
   final List<Widget> _widget = []; // ? Ajout des liste des differentes views
   int _indexSelected =
       0; // ? Initialisation de la vue on va trier les differents ecran avec un index pour juste passer de l'écran 2 au 3
-  final String _login = ''; // ? login mdp sa sera juste pour verif sur la base
+// ? login mdp sa sera juste pour verif sur la base
   final String _motdepasse = ""; // ?
   @override
   void initState() {
     // ? La méthode init state c'est une méthode lancer une seule fois quand on arriver dans une view donc au lancement dans l'app on va dans le gestionnaire puis cette methode utiliser qu'une fois
     super.initState();
     _widget.addAll([
+      /*
       AccueilScreen(
           onChangedStep: (index) => setState(() => _indexSelected = index)),
       InscriptionScreen(
@@ -33,7 +33,7 @@ class _GuestScreenState extends State<GuestScreen> {
                 // ? avec sa méthode set state qui permets du coup de remodifier index
                 _indexSelected =
                     index; //? cette méthode sera utiliser des que je serai depuis l'écran login pour pouvoir aller sur un autre ecran donc je recupererai 2 attribut un mdp un login et un index pour savoir la page a afficher
-              })),
+              })), */
       // ? on ajoute donc a l'attribut de list tableau de vue vide l'écran login
       LoginScreen(
           onChangedStep: (index, value, value1) => setState(() {
