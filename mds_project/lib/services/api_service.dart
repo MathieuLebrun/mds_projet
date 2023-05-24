@@ -1,13 +1,11 @@
 import 'dart:convert';
-import 'dart:developer';
 import 'package:http/http.dart' as http;
 import 'package:mds_project/models/login_request_model.dart';
-import 'package:mds_project/models/login_response_model.dart';
 import 'package:mds_project/models/register_response_model.dart';
 import 'package:mds_project/models/register_request_model.dart';
 import 'package:mds_project/models/score_modify_model.dart';
 import 'package:mds_project/services/persistancehandler.dart';
-import '../../config.dart';
+
 import '../models/params_requets_model.dart';
 import '../models/score_response_model.dart';
 import '../models/user.dart';
@@ -86,6 +84,27 @@ class APIService {
           'Content-Type': 'application/json',
         },
         body: jsonEncode(model.toJson()),
+      );
+      if (response.statusCode == 201) {
+        return response.body;
+      } else {
+        return ('Une erreur est survenue : ${response}');
+      }
+    } catch (error) {
+      return ('Error adding/updating score: $error');
+    }
+  }
+
+  Future<String> delUser(String username) async {
+    try {
+      var accesToken = await PersistanceHandler().getTokenEDP();
+
+      final response = await http.put(
+        Uri.parse('http://162.19.230.6:5000/api/rm/$username'),
+        headers: {
+          //  'Authorization': 'Bearer $accessToken',
+          'Content-Type': 'application/json',
+        },
       );
       if (response.statusCode == 201) {
         return response.body;

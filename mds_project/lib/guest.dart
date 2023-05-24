@@ -3,7 +3,6 @@ import 'package:mds_project/inscription.dart';
 
 import 'login.dart';
 import 'mainScreen.dart';
-import 'testGif.dart';
 import 'views/accueilScreen.dart';
 
 class GuestScreen extends StatefulWidget {
@@ -42,8 +41,6 @@ class _GuestScreenState extends State<GuestScreen> {
                     index; // ? cette méthode sera utiliser des que je serai depuis l'écran login pour pouvoir aller sur un autre ecran donc je recupererai 2 attribut un mdp un login et un index pour savoir la page a afficher
               })),
       mainScreen(
-          onChangedStep: (index) => setState(() => _indexSelected = index)),
-      testGifScreen(
           onChangedStep: (index) => setState(() => _indexSelected = index)),
     ]);
   }
