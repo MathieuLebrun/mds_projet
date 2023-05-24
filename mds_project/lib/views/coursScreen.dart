@@ -86,23 +86,6 @@ class _coursScreenState extends State<coursScreen> {
               },
               child: Text("Passer à l'exercice"),
             ),
-          SizedBox(
-            width: 500,
-            height: 396,
-            child: ModelViewer(
-              // backgroundColor: Color.fromARGB(0xFF, 0xEE, 0xEE, 0xEE),
-              src: 'assets/clavier.gltf', // a bundled asset file
-              alt: "A 3D model of an astronaut",
-              ar: true,
-              //arModes: ['scene-viewer', 'webxr', 'quick-look'],
-              autoRotate: true,
-              autoPlay: true,
-              // src: 'https://modelviewer.dev/shared-assets/models/Astronaut.glb',
-              cameraControls: true,
-              //  iosSrc: 'https://modelviewer.dev/shared-assets/models/Astronaut.usdz',
-              // disableZoom: true,
-            ),
-          ),
         ],
       ),
     );
