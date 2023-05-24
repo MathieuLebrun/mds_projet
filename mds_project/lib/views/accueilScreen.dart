@@ -51,7 +51,7 @@ class _AccueilScreenState extends State<AccueilScreen> {
             ),
             Container(
               margin: EdgeInsets.fromLTRB(40, 0, 40, 0),
-              padding: EdgeInsets.only(bottom: 50),
+              padding: EdgeInsets.only(bottom: 20),
               decoration: BoxDecoration(
                 border:
                     Border(bottom: BorderSide(color: Colors.black, width: 2)),
@@ -94,8 +94,8 @@ class _AccueilScreenState extends State<AccueilScreen> {
                   // elevation: MaterialStateProperty.all(3),
                   shadowColor: Colors.transparent,
                 ),
-                child: Center(
-                  child: const Text("S'inscrire",
+                child: const Center(
+                  child: Text("S'inscrire",
                       style: TextStyle(
                           color: Colors.white,
                           fontSize: 25,
@@ -103,7 +103,7 @@ class _AccueilScreenState extends State<AccueilScreen> {
                 ),
               ),
             ),
-            const SizedBox(height: 50),
+            const SizedBox(height: 10),
             ElevatedButton(
               onPressed: () {
                 Navigator.push(
@@ -122,8 +122,8 @@ class _AccueilScreenState extends State<AccueilScreen> {
                 // elevation: MaterialStateProperty.all(3),
                 shadowColor: Colors.transparent,
               ),
-              child: Center(
-                child: const Text("Se connecter",
+              child: const Center(
+                child: Text("Se connecter",
                     style: TextStyle(
                         color: Colors.white,
                         fontSize: 25,
