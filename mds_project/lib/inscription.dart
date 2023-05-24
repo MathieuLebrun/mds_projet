@@ -52,10 +52,10 @@ class _InscriptionScreenState extends State<InscriptionScreen> {
                     begin: Alignment.topCenter,
                     end: Alignment.bottomCenter,
                     colors: [
-                      Color(0xFFDD6CFF),
-                      Color(0xFFF295FF),
-                      Color(0xFFF295FF),
-                      Color(0xFFF8C6FF),
+                      Color(0xffffffff),
+                      Color(0xFFffffb9),
+                      Color(0xFFffffb9),
+                      Color(0xFfcc55ea)
                     ],
                     stops: [0.1, 0.4, 0.7, 0.9],
                   ),
@@ -67,7 +67,7 @@ class _InscriptionScreenState extends State<InscriptionScreen> {
                   physics: const AlwaysScrollableScrollPhysics(),
                   padding: const EdgeInsets.symmetric(
                     horizontal: 40.0,
-                    vertical: 120.0,
+                    vertical: 60.0,
                   ),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -87,12 +87,21 @@ class _InscriptionScreenState extends State<InscriptionScreen> {
                         ),
                       ]),
                       Text(
-                        'Inscriptions',
+                        "S'inscrire",
                         style: TextStyle(
-                          color: Colors.white,
-                          fontFamily: 'OpenSans',
+                          color: Colors.black,
+                          fontFamily: 'Asdean',
                           fontSize: 30.0,
                           fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      Container(
+                        margin: EdgeInsets.fromLTRB(40, 0, 40, 0),
+                        padding: EdgeInsets.only(bottom: 20),
+                        decoration: BoxDecoration(
+                          border: Border(
+                              bottom:
+                                  BorderSide(color: Colors.black, width: 2)),
                         ),
                       ),
                       SizedBox(height: 30.0),
@@ -113,6 +122,14 @@ class _InscriptionScreenState extends State<InscriptionScreen> {
                         height: 30,
                       ),
                       _buildInscInBtn(),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          _buildLilbulle1(),
+                          _buildLilbulle2(),
+                        ],
+                      ),
+                      _buildbulleMain(),
                     ],
                   ),
                 ),
@@ -128,11 +145,6 @@ class _InscriptionScreenState extends State<InscriptionScreen> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
-        Text(
-          'Email',
-          style: kLabelStyle,
-        ),
-        SizedBox(height: 10.0),
         Container(
           alignment: Alignment.centerLeft,
           decoration: kBoxDecorationStyle,
@@ -141,18 +153,14 @@ class _InscriptionScreenState extends State<InscriptionScreen> {
             controller: emailcontroller,
             keyboardType: TextInputType.emailAddress,
             style: TextStyle(
-              color: Colors.white,
+              color: Colors.black,
               fontFamily: 'OpenSans',
             ),
-            decoration: InputDecoration(
+            decoration: const InputDecoration(
+              labelText: 'Email',
+              floatingLabelBehavior: FloatingLabelBehavior.auto,
               border: InputBorder.none,
-              contentPadding: const EdgeInsets.only(top: 14.0),
-              prefixIcon: Icon(
-                Icons.email,
-                color: Colors.white,
-              ),
-              hintText: 'Entrez votre Email',
-              hintStyle: kHintTextStyle,
+              contentPadding: EdgeInsets.only(left: 16.0),
             ),
           ),
         ),
@@ -235,6 +243,62 @@ class _InscriptionScreenState extends State<InscriptionScreen> {
     return const Color(0xFFDD45F2);
   }
 
+  Widget _buildbulleMain() {
+    return Container(
+      width: 200,
+      height: 200,
+      decoration: BoxDecoration(
+        shape: BoxShape.circle,
+        gradient: RadialGradient(
+          colors: [
+            Color(0xFFFFFFFF),
+            Color(0xFFF8C6FF),
+            Color(0xFFDD6CFF),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildLilbulle1() {
+    return Container(
+      width: 90,
+      height: 90,
+      decoration: BoxDecoration(
+        shape: BoxShape.circle,
+        gradient: LinearGradient(
+          colors: [
+            Color(0xFFDD6CFF),
+            //  Color(0xFFF8C6FF),
+            Color(0xFFFFFFFF),
+          ],
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+        ),
+      ),
+    );
+  }
+
+  Widget _buildLilbulle2() {
+    return Container(
+      margin: EdgeInsets.fromLTRB(150, 0, 0, 0),
+      width: 65,
+      height: 65,
+      decoration: BoxDecoration(
+        shape: BoxShape.circle,
+        gradient: LinearGradient(
+          colors: [
+            Color(0xFFDD6CFF),
+            //  Color(0xFFF8C6FF),
+            Color(0xFFF8C6FF),
+          ],
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+        ),
+      ),
+    );
+  }
+
   Widget _buildInscInBtn() {
     return Container(
       padding: const EdgeInsets.symmetric(vertical: 25.0),
@@ -256,13 +320,13 @@ class _InscriptionScreenState extends State<InscriptionScreen> {
         ), */
         // color: Colors.white,
         child: const Text(
-          'Valider',
+          'Continuer',
           style: TextStyle(
             color: Colors.white,
             letterSpacing: 1.5,
             fontSize: 18.0,
             fontWeight: FontWeight.bold,
-            fontFamily: 'OpenSans',
+            fontFamily: 'Asdean',
           ),
         ),
       ),
@@ -322,10 +386,6 @@ class _InscriptionScreenState extends State<InscriptionScreen> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
-        Text(
-          "Nom d'utilisateur",
-          style: kLabelStyle,
-        ),
         SizedBox(height: 10.0),
         Container(
           alignment: Alignment.centerLeft,
@@ -334,21 +394,14 @@ class _InscriptionScreenState extends State<InscriptionScreen> {
           child: TextField(
             controller: mdpusername,
             style: TextStyle(
-              color: Colors.white,
+              color: Colors.black,
               fontFamily: 'OpenSans',
             ),
             decoration: const InputDecoration(
+              labelText: "Nom d'utilisateur",
+              floatingLabelBehavior: FloatingLabelBehavior.auto,
               border: InputBorder.none,
-              contentPadding: EdgeInsets.only(top: 14.0),
-              prefixIcon: Icon(
-                Icons.lock,
-                color: Color(0xFFDD45F2),
-              ),
-              hintText: "Entrez votre nom d'utilisateur",
-              hintStyle: TextStyle(
-                color: Colors.white54,
-                fontFamily: 'OpenSans',
-              ),
+              contentPadding: EdgeInsets.only(left: 16.0),
             ),
           ),
         ),
@@ -360,10 +413,6 @@ class _InscriptionScreenState extends State<InscriptionScreen> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
-        Text(
-          'Mot de passe',
-          style: kLabelStyle,
-        ),
         SizedBox(height: 10.0),
         Container(
           alignment: Alignment.centerLeft,
@@ -373,18 +422,14 @@ class _InscriptionScreenState extends State<InscriptionScreen> {
             controller: mdpcontroller,
             obscureText: true,
             style: TextStyle(
-              color: Colors.white,
+              color: Colors.black,
               fontFamily: 'OpenSans',
             ),
-            decoration: InputDecoration(
+            decoration: const InputDecoration(
+              labelText: 'Mot de passe',
+              floatingLabelBehavior: FloatingLabelBehavior.auto,
               border: InputBorder.none,
-              contentPadding: EdgeInsets.only(top: 14.0),
-              prefixIcon: Icon(
-                Icons.lock,
-                color: Colors.white,
-              ),
-              hintText: 'Entrez votre mot de passe',
-              hintStyle: kHintTextStyle,
+              contentPadding: EdgeInsets.only(left: 16.0),
             ),
           ),
         ),
