@@ -49,9 +49,12 @@ dependencies:
   lottie: ^2.3.0
   video_player: ^2.6.1
   model_viewer_plus: ^1.5.0
+  dcdg: ^4.1.0
 
 dev_dependencies:
   flutter_test:
+    sdk: flutter
+  integration_test:
     sdk: flutter
 
   # The "flutter_lints" package below contains a set of recommended lints to
@@ -83,12 +86,16 @@ flutter:
     - assets/gifdanseshelou.gif
     - assets/gifdanseshelou2.gif
     - assets/images/pn2.png
-    - assets/images/background.png
-    - assets/images/sprintesheet.png
-    - assets/images/background2.png
     - assets/test.json
     - assets/video/math.mp4
     - assets/clavier.gltf
+    - assets/images/LogoAppMob.png
+    - assets/images/Logo1etoile.png
+    - assets/images/Logo2etoile.png
+    - assets/images/LogoBoss1etoile.png
+    - assets/images/LogoBoss2etoile.png
+    - assets/images/LogoBoss3etoile.png
+    - assets/images/Logo3etoile.png
 
   # To add assets to your application, add an assets section, like this:
   # assets:

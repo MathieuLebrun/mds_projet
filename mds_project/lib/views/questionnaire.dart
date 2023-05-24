@@ -6,6 +6,8 @@ import 'package:mds_project/services/persistancehandler.dart';
 import '../models/score_modify_model.dart';
 
 class QuestionnairePage extends StatefulWidget {
+  final List<Map<String, Object>> questions;
+  QuestionnairePage({required this.questions});
   @override
   _QuestionnairePageState createState() => _QuestionnairePageState();
 }
@@ -13,46 +15,7 @@ class QuestionnairePage extends StatefulWidget {
 class _QuestionnairePageState extends State<QuestionnairePage> {
   int _questionIndex = 0;
   int _score = 0;
-
-  final List<Map<String, Object>> _questions = [
-    {
-      'questionText': 'Quelle est la valeur de pi ?',
-      'answers': [
-        {'text': '3', 'score': 0},
-        {'text': '3,14', 'score': 1},
-        {'text': '3,1416', 'score': 0},
-        {'text': '22/7', 'score': 0},
-      ],
-    },
-    {
-      'questionText': 'Quelle est la formule de l\'aire d\'un carré ?',
-      'answers': [
-        {'text': 'A = c x c', 'score': 1},
-        {'text': 'A = l x L', 'score': 0},
-        {'text': 'A = (c + c) x (c + c)', 'score': 0},
-        {'text': 'A = c²', 'score': 0},
-      ],
-    },
-    {
-      'questionText': 'Quelle est la formule de l\'aire d\'un rectangle ?',
-      'answers': [
-        {'text': 'A = c x c', 'score': 0},
-        {'text': 'A = l x L', 'score': 1},
-        {'text': 'A = (c + c) x (c + c)', 'score': 0},
-        {'text': 'A = l x h', 'score': 0},
-      ],
-    },
-    {
-      'questionText':
-          'Quelle est la formule de la circonférence d\'un cercle ?',
-      'answers': [
-        {'text': 'C = 2 x pi x r', 'score': 1},
-        {'text': 'C = pi x r²', 'score': 0},
-        {'text': 'C = l x L', 'score': 0},
-        {'text': 'C = 2 x r', 'score': 0},
-      ],
-    },
-  ];
+  bool repondu = false;
 
   void _answerQuestion(int score) {
     setState(() {
@@ -74,10 +37,10 @@ class _QuestionnairePageState extends State<QuestionnairePage> {
       appBar: AppBar(
         title: Text('Questionnaire'),
       ),
-      body: _questionIndex < _questions.length
+      body: _questionIndex < widget.questions.length
           ? Quiz(
               questionIndex: _questionIndex,
-              questions: _questions,
+              questions: widget.questions,
               answerQuestion: _answerQuestion,
             )
           : Result(_score, _resetQuestionnaire),
@@ -123,10 +86,10 @@ class Question extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: double.infinity,
-      margin: EdgeInsets.all(10),
+      margin: const EdgeInsets.all(10),
       child: Text(
         questionText,
-        style: TextStyle(
+        style: const TextStyle(
           fontSize: 24,
           fontWeight: FontWeight.bold,
         ),
@@ -203,12 +166,13 @@ class Result extends StatelessWidget {
           onPressed: resetHandler,
         ),
         // la ici rajouter le setteur du score et le button pour revenir a l'écran principal
+        SizedBox(height: 10),
         ElevatedButton(
             style: ElevatedButton.styleFrom(
               primary: Colors.blue,
               onPrimary: Colors.white,
             ),
-            child: Text("Je retourne dans l'écran principal mon gaté"),
+            child: Text("Je retourne dans l'écran principal"),
             onPressed: () async {
               ScoreModifyModel model = ScoreModifyModel(
                 category: 'math',
