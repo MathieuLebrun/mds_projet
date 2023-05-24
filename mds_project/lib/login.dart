@@ -1,9 +1,11 @@
 import 'dart:convert';
+import 'dart:developer';
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:http/http.dart';
+import 'package:mds_project/inscription.dart';
 import 'package:mds_project/models/login_request_model.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -58,10 +60,10 @@ class _LoginScreenState extends State<LoginScreen> {
                     begin: Alignment.topCenter,
                     end: Alignment.bottomCenter,
                     colors: [
-                      Color(0xFF73AEF5),
-                      Color(0xFF61A4F1),
-                      Color(0xFF478DE0),
-                      Color(0xFF398AE5),
+                      Color(0xffffffff),
+                      Color(0xFFffffb9),
+                      Color(0xFFffffb9),
+                      Color(0xFfcc55ea)
                     ],
                     stops: [0.1, 0.4, 0.7, 0.9],
                   ),
@@ -78,26 +80,43 @@ class _LoginScreenState extends State<LoginScreen> {
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
+                      ElevatedButton(
+                        onPressed: () {
+                          emailcontroller.text = "teo@garbarinoo.co";
+                          mdpcontroller.text = "1234567";
+                        },
+                        child: Text("BYPASS BY T£OX",
+                            style: TextStyle(
+                              color: Color(0xFF505050),
+                              fontFamily: 'Asdaen',
+                            )),
+                      ),
                       const Text(
-                        'Connexion',
+                        'Se connecter',
                         style: TextStyle(
-                          color: Colors.white,
+                          color: Color(0xFF383838),
                           fontFamily: 'Asdaen',
                           fontSize: 30.0,
                           fontWeight: FontWeight.bold,
                         ),
                       ),
-                      const SizedBox(height: 30.0),
+                      Container(
+                        margin: EdgeInsets.fromLTRB(40, 0, 40, 0),
+                        padding: EdgeInsets.only(bottom: 20),
+                        decoration: BoxDecoration(
+                          border: Border(
+                              bottom:
+                                  BorderSide(color: Colors.black, width: 2)),
+                        ),
+                      ),
+                      const SizedBox(height: 10.0),
+                      _buildLogo(),
                       _buildEmailTF(),
                       const SizedBox(
                         height: 30.0,
                       ),
                       _buildPasswordTF(),
-                      _buildForgotPasswordBtn(),
-                      _buildRememberMeCheckbox(),
                       _buildLoginBtn(),
-                      _buildSignInWithText(),
-                      _buildSocialBtnRow(),
                       _buildSignupBtn(),
                     ],
                   ),
@@ -148,6 +167,8 @@ class _LoginScreenState extends State<LoginScreen> {
       var loginResponse = loginResponseJson(response.body);
       PersistanceHandler().setTokenEDP(loginResponse.accesToken);
       PersistanceHandler().setID(loginResponse.id);
+      PersistanceHandler().setUsername(loginResponse.username);
+      PersistanceHandler().setEmail(loginResponse.email);
       return true;
     } else {
       MessageErreur = "Connexion refusé";
@@ -160,31 +181,24 @@ class _LoginScreenState extends State<LoginScreen> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
-        Text(
-          'Email',
-          style: kLabelStyle,
-        ),
         SizedBox(height: 10.0),
         Container(
-          alignment: Alignment.centerLeft,
           decoration: kBoxDecorationStyle,
+          alignment: Alignment.centerLeft,
           height: 60.0,
           child: TextField(
             controller: emailcontroller,
             keyboardType: TextInputType.emailAddress,
+            key: const Key('email'),
             style: const TextStyle(
-              color: Colors.white,
+              color: Color(0xFF505050),
               fontFamily: 'Asdaen',
             ),
-            decoration: InputDecoration(
+            decoration: const InputDecoration(
+              labelText: 'Email',
+              floatingLabelBehavior: FloatingLabelBehavior.auto,
               border: InputBorder.none,
-              contentPadding: const EdgeInsets.only(top: 14.0),
-              prefixIcon: const Icon(
-                Icons.email,
-                color: Colors.white,
-              ),
-              hintText: 'Entrez votre Email',
-              hintStyle: kHintTextStyle,
+              contentPadding: EdgeInsets.only(left: 16.0),
             ),
           ),
         ),
@@ -196,10 +210,6 @@ class _LoginScreenState extends State<LoginScreen> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
-        Text(
-          'Mot de passe',
-          style: kLabelStyle,
-        ),
         SizedBox(height: 10.0),
         Container(
           alignment: Alignment.centerLeft,
@@ -208,64 +218,20 @@ class _LoginScreenState extends State<LoginScreen> {
           child: TextField(
             controller: mdpcontroller,
             obscureText: true,
+            key: const Key('mdp'),
             style: TextStyle(
-              color: Colors.white,
-              fontFamily: 'OpenSans',
+              color: Color(0xFF505050),
+              fontFamily: 'Asdean',
             ),
-            decoration: InputDecoration(
+            decoration: const InputDecoration(
+              labelText: 'Mot de passe',
+              floatingLabelBehavior: FloatingLabelBehavior.auto,
               border: InputBorder.none,
-              contentPadding: EdgeInsets.only(top: 14.0),
-              prefixIcon: Icon(
-                Icons.lock,
-                color: Colors.white,
-              ),
-              hintText: 'Entrez votre mot de passe',
-              hintStyle: kHintTextStyle,
+              contentPadding: EdgeInsets.only(left: 16.0),
             ),
           ),
         ),
       ],
-    );
-  }
-
-  Widget _buildForgotPasswordBtn() {
-    return Container(
-      alignment: Alignment.centerRight,
-      child: TextButton(
-        onPressed: () => print('Forgot Password Button Pressed'),
-        //   padding: EdgeInsets.only(right: 0.0),
-        child: Text(
-          'Mot de passe oublié?',
-          style: kLabelStyle,
-        ),
-      ),
-    );
-  }
-
-  Widget _buildRememberMeCheckbox() {
-    return Container(
-      height: 20.0,
-      child: Row(
-        children: <Widget>[
-          Theme(
-            data: ThemeData(unselectedWidgetColor: Colors.white),
-            child: Checkbox(
-              value: _rememberMe,
-              checkColor: Colors.green,
-              activeColor: Colors.white,
-              onChanged: (value) {
-                setState(() {
-                  _rememberMe = value!;
-                });
-              },
-            ),
-          ),
-          Text(
-            'Se souvenir de moi',
-            style: kLabelStyle,
-          ),
-        ],
-      ),
     );
   }
 
@@ -274,7 +240,17 @@ class _LoginScreenState extends State<LoginScreen> {
       padding: EdgeInsets.symmetric(vertical: 25.0),
       width: double.infinity,
       child: ElevatedButton(
+        key: const Key('login'),
         // elevation: 5.0,
+        style: ButtonStyle(
+          backgroundColor: MaterialStateProperty.all<Color>(Colors.transparent),
+          elevation: MaterialStateProperty.all<double>(0),
+          shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+            RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(20),
+            ),
+          ),
+        ),
         onPressed: () async => {
           if (await _signInWithGoogle())
             {
@@ -288,94 +264,56 @@ class _LoginScreenState extends State<LoginScreen> {
           else
             {},
         },
-        //padding: EdgeInsets.all(15.0),
-        /* shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(30.0),
-        ), */
-        // color: Colors.white,
-        child: Text(
-          'SE CONNECTER',
-          style: TextStyle(
-            color: Color(0xFF527DAA),
-            letterSpacing: 1.5,
-            fontSize: 18.0,
-            fontWeight: FontWeight.bold,
-            fontFamily: 'OpenSans',
+        child: Container(
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              colors: [
+                Color(0xFFFFFFFF),
+                Color(0xFFF8C6FF),
+                Color(0xFFF295FF),
+                Color(0xFFF295FF),
+                Color(0xFFDD6CFF),
+              ],
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+            ),
+            borderRadius: BorderRadius.circular(20),
+          ),
+          padding: EdgeInsets.symmetric(vertical: 15.0),
+          child: Center(
+            child: Text(
+              'SE CONNECTER',
+              style: TextStyle(
+                color: Colors.white,
+                letterSpacing: 1.5,
+                fontSize: 18.0,
+                fontWeight: FontWeight.bold,
+                fontFamily: 'Asdean',
+              ),
+            ),
           ),
         ),
       ),
     );
   }
 
-  Widget _buildSignInWithText() {
-    return Column(
-      children: <Widget>[
-        Text(
-          '- OU -',
-          style: TextStyle(
-            color: Colors.white,
-            fontWeight: FontWeight.w400,
-          ),
-        ),
-        SizedBox(height: 20.0),
-        Text(
-          'Se connecter avec',
-          style: kLabelStyle,
-        ),
-      ],
-    );
-  }
-
-  Widget _buildSocialBtn(Function onTap, AssetImage logo) {
-    return GestureDetector(
-      // onTap: onTap,
-      child: Container(
-        height: 60.0,
-        width: 60.0,
-        decoration: BoxDecoration(
-          shape: BoxShape.circle,
-          color: Colors.white,
-          boxShadow: const [
-            BoxShadow(
-              color: Colors.black26,
-              offset: Offset(0, 2),
-              blurRadius: 6.0,
-            ),
-          ],
-          image: DecorationImage(
-            image: logo,
-          ),
-        ),
-      ),
-    );
-  }
-
-  Widget _buildSocialBtnRow() {
-    return Padding(
-      padding: EdgeInsets.symmetric(vertical: 30.0),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        children: <Widget>[
-          _buildSocialBtn(
-            () => print('Login with Facebook'),
-            AssetImage(
-              'assets/fb.jpg',
-            ),
-          ),
-          _buildSocialBtn(
-            () => print('Login with Google'),
-            AssetImage(
-              'assets/google.jpg',
-            ),
-          ),
-        ],
-      ),
-    );
+  Widget _buildLogo() {
+    return Center(
+        child: Image.asset(
+      'assets/images/LogoAppMob.png', // Chemin relatif vers l'image
+      width: 175, // Largeur souhaitée de l'image
+      height: 175, // Hauteur souhaitée de l'image
+    ));
   }
 
   Widget _buildSignupBtn() {
     return GestureDetector(
-      onTap: () => widget.onChangedStep(2, "", ""),
+      onTap: () => Navigator.push(
+          context,
+          MaterialPageRoute(
+              builder: (context) => InscriptionScreen(
+                    onChangedStep: (inta, stringa, string) {},
+                  ))),
       child: RichText(
         text: TextSpan(
           children: [
