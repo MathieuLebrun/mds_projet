@@ -1,13 +1,15 @@
 import 'dart:convert';
+import 'dart:developer';
 import 'package:http/http.dart' as http;
 import 'package:mds_project/models/login_request_model.dart';
 import 'package:mds_project/models/login_response_model.dart';
 import 'package:mds_project/models/register_response_model.dart';
 import 'package:mds_project/models/register_request_model.dart';
 import 'package:mds_project/models/score_modify_model.dart';
+import 'package:mds_project/services/persistancehandler.dart';
 import '../../config.dart';
+import '../models/params_requets_model.dart';
 import '../models/score_response_model.dart';
-import 'shared_service.dart';
 import '../models/user.dart';
 
 class APIService {
@@ -37,7 +39,6 @@ class APIService {
       'Content-Type': 'application/json;charset=UTF-8',
     };
     var url = "http://162.19.230.6:5000/api/auth/register";
-    print(url);
 
     var response = await client.post(
       Uri.parse(url),
@@ -58,7 +59,7 @@ class APIService {
       final response = await http.post(
         Uri.parse('http://162.19.230.6:5000/api/scores/$userId/scores'),
         headers: {
-          'Authorization': 'Bearer $accessToken',
+          'token': 'Bearer $accessToken',
           'Content-Type': 'application/json',
         },
         body: jsonEncode(model.toJson()),
@@ -74,13 +75,35 @@ class APIService {
     }
   }
 
+  Future<String> updateUserParams(String username, ParamsModel model) async {
+    try {
+      var accesToken = await PersistanceHandler().getTokenEDP();
+
+      final response = await http.put(
+        Uri.parse('http://162.19.230.6:5000/api/users/$username'),
+        headers: {
+          //  'Authorization': 'Bearer $accessToken',
+          'Content-Type': 'application/json',
+        },
+        body: jsonEncode(model.toJson()),
+      );
+      if (response.statusCode == 201) {
+        return response.body;
+      } else {
+        return ('Une erreur est survenue : ${response}');
+      }
+    } catch (error) {
+      return ('Error adding/updating score: $error');
+    }
+  }
+
   Future<List<ScoreResponseModel>> getScores(
       String userId, String accessToken) async {
     try {
       final response = await http.get(
         Uri.parse('http://162.19.230.6:5000/api/scores/$userId'),
         headers: {
-          // 'Authorization': 'Bearer $accessToken',
+          'token': 'Bearer $accessToken',
         },
       );
 
