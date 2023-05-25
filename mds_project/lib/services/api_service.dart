@@ -73,47 +73,34 @@ class APIService {
     }
   }
 
-  Future<String> updateUserParams(String username, ParamsModel model) async {
-    try {
-      var accesToken = await PersistanceHandler().getTokenEDP();
+  Future<http.Response> updateUserParams(
+      String username, ParamsModel model) async {
+    var accesToken = await PersistanceHandler().getTokenEDP();
 
-      final response = await http.put(
-        Uri.parse('http://162.19.230.6:5000/api/users/$username'),
-        headers: {
-          //  'Authorization': 'Bearer $accessToken',
-          'Content-Type': 'application/json',
-        },
-        body: jsonEncode(model.toJson()),
-      );
-      if (response.statusCode == 201) {
-        return response.body;
-      } else {
-        return ('Une erreur est survenue : ${response}');
-      }
-    } catch (error) {
-      return ('Error adding/updating score: $error');
-    }
+    final response = await http.put(
+      Uri.parse('http://162.19.230.6:5000/api/users/$username'),
+      headers: {
+        //  'Authorization': 'Bearer $accessToken',
+        'Content-Type': 'application/json',
+      },
+      body: jsonEncode(model.toJson()),
+    );
+
+    return response;
   }
 
-  Future<String> delUser(String username) async {
-    try {
-      var accesToken = await PersistanceHandler().getTokenEDP();
+  Future<http.Response> delUser(String username) async {
+    var accesToken = await PersistanceHandler().getTokenEDP();
 
-      final response = await http.put(
-        Uri.parse('http://162.19.230.6:5000/api/rm/$username'),
-        headers: {
-          //  'Authorization': 'Bearer $accessToken',
-          'Content-Type': 'application/json',
-        },
-      );
-      if (response.statusCode == 201) {
-        return response.body;
-      } else {
-        return ('Une erreur est survenue : ${response}');
-      }
-    } catch (error) {
-      return ('Error adding/updating score: $error');
-    }
+    final response = await http.delete(
+      Uri.parse('http://162.19.230.6:5000/api/rm/$username'),
+      headers: {
+        //  'Authorization': 'Bearer $accessToken',
+        'Content-Type': 'application/json',
+      },
+    );
+
+    return response;
   }
 
   Future<List<ScoreResponseModel>> getScores(

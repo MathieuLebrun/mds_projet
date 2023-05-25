@@ -1,6 +1,7 @@
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
+import 'package:http/src/response.dart';
 import 'package:mds_project/services/api_service.dart';
 
 import 'package:mds_project/services/persistancehandler.dart';
@@ -13,8 +14,7 @@ import 'views/draganddropScreen.dart';
 import 'utilities/global.dart';
 
 class mainScreen extends StatefulWidget {
-  final Function(int) onChangedStep;
-  const mainScreen({Key? key, required this.onChangedStep}) : super(key: key);
+  const mainScreen({Key? key});
 
   @override
   _mainScreenState createState() => _mainScreenState();
@@ -291,12 +291,8 @@ class _mainScreenState extends State<mainScreen> {
             currentcolors = const Color(0xFF383838);
             currentcolorsMain = const Color(0xFF848484);
             PersistanceHandler().clearPersistentData();
-            Navigator.push(
-                context,
-                MaterialPageRoute(
-                    builder: (context) => LoginScreen(
-                          onChangedStep: (int, String, String2) {},
-                        )));
+            Navigator.push(context,
+                MaterialPageRoute(builder: (context) => LoginScreen()));
           }
           break;
 
@@ -363,7 +359,7 @@ class _mainScreenState extends State<mainScreen> {
                     width: 200.0,
                     child: ElevatedButton(
                       onPressed: () async {
-                        await _ModifParams();
+                        //  await _ModifParams();
                         Navigator.of(context).pop();
                       },
                       child: const Text(
@@ -379,7 +375,14 @@ class _mainScreenState extends State<mainScreen> {
                     width: 200,
                     child: ElevatedButton(
                       onPressed: () async {
-                        Navigator.of(context).pop();
+                        var response = await _delUser();
+                        if (response) {
+                          Navigator.of(context).pop();
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => LoginScreen()));
+                        } else {}
                       },
                       style: ElevatedButton.styleFrom(
                         backgroundColor: Colors.red,
@@ -411,8 +414,8 @@ class _mainScreenState extends State<mainScreen> {
       ),
     );
   }
-
-  Future<String> _ModifParams() async {
+/*
+  Future<void> _ModifParams() async {
     var usernames = await PersistanceHandler().getUsername();
     var email = await PersistanceHandler().getEmail();
 
@@ -423,21 +426,19 @@ class _mainScreenState extends State<mainScreen> {
 
     var response = await APIService().updateUserParams(usernames!, model);
 
-    return response;
-  }
+    return null;
+  }*/
 
-  Future<String> _delUser() async {
+  Future<bool> _delUser() async {
     var usernames = await PersistanceHandler().getUsername();
-    var email = await PersistanceHandler().getEmail();
 
-    ParamsModel model = ParamsModel(
-      username: usernameController.text,
-      email: emailController.text,
-    );
-
-    var response = await APIService().updateUserParams(usernames!, model);
-
-    return response;
+    var response = await APIService().delUser(usernames!);
+    if (response.statusCode == 200) {
+      PersistanceHandler().clearPersistentData();
+      return true;
+    } else {
+      return false;
+    }
   }
 
   Widget monWidgetGIF2(widthFactor, heightFactor, pathimg) {
