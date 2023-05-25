@@ -1,17 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import '../services/api_service.dart';
-import 'home.dart';
-import 'login.dart';
-import 'models/register_request_model.dart';
-import 'utilities/constant.dart';
+import '../../services/api_service.dart';
+
+import '../login.dart';
+import '../models/register_request_model.dart';
+import '../utilities/constant.dart';
 
 class InscriptionScreen extends StatefulWidget {
-  final Function(int, String, String)
-      onChangedStep; // ? la je suis definie une methode obligatoire le changestep qui a un int "index" puis les deux string mdp login
+  // ? la je suis definie une methode obligatoire le changestep qui a un int "index" puis les deux string mdp login
   const InscriptionScreen({
     Key? key,
-    required this.onChangedStep,
   }) : super(key: key);
 
   @override
@@ -79,10 +77,7 @@ class _InscriptionScreenState extends State<InscriptionScreen> {
                             Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (context) => LoginScreen(
-                                          onChangedStep:
-                                              (inta, stringa, string) {},
-                                        )));
+                                    builder: (context) => LoginScreen()));
                           },
                         ),
                       ]),
@@ -212,10 +207,7 @@ class _InscriptionScreenState extends State<InscriptionScreen> {
       showInSnackBar("✅");
       Navigator.push(
         context,
-        MaterialPageRoute(
-            builder: (context) => LoginScreen(
-                  onChangedStep: (inta, stringa, string) {},
-                )),
+        MaterialPageRoute(builder: (context) => LoginScreen()),
       );
     } else {
       MessageErreur = "Erreur de connexion ";
@@ -310,7 +302,7 @@ class _InscriptionScreenState extends State<InscriptionScreen> {
         // elevation: 5.0,
         onPressed: () async => {
           if (await _signInWithGoogle())
-            {widget.onChangedStep(1, "", "")}
+            {MaterialPageRoute(builder: (context) => LoginScreen())}
           else
             {},
         },

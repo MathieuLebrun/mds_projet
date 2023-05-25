@@ -1,14 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:mds_project/inscription.dart';
+import 'package:mds_project/views/inscription.dart';
 
 import '../login.dart';
 
 class AccueilScreen extends StatefulWidget {
-  final Function(int)
-      onChangedStep; // ? la je suis definie une methode obligatoire le changestep qui a un int "index" puis les deux string mdp login
+  // ? la je suis definie une methode obligatoire le changestep qui a un int "index" puis les deux string mdp login
   AccueilScreen({
     Key? key,
-    required this.onChangedStep,
   }) : super(key: key);
 
   @override
@@ -81,9 +79,7 @@ class _AccueilScreenState extends State<AccueilScreen> {
                   Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => InscriptionScreen(
-                                onChangedStep: (i, b, z) {},
-                              )));
+                          builder: (context) => InscriptionScreen()));
                 },
                 style: ElevatedButton.styleFrom(
                   shape: RoundedRectangleBorder(
@@ -106,12 +102,8 @@ class _AccueilScreenState extends State<AccueilScreen> {
             const SizedBox(height: 10),
             ElevatedButton(
               onPressed: () {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => LoginScreen(
-                              onChangedStep: (i, b, z) {},
-                            )));
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => LoginScreen()));
               },
               style: ElevatedButton.styleFrom(
                 shape: RoundedRectangleBorder(
