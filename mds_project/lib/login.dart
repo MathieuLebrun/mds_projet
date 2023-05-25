@@ -1,32 +1,25 @@
-import 'dart:convert';
-import 'dart:developer';
-
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:http/http.dart';
-import 'package:mds_project/inscription.dart';
+import 'package:mds_project/views/inscription.dart';
 import 'package:mds_project/models/login_request_model.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:mds_project/services/persistancehandler.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'home.dart';
+
 import 'utilities/constant.dart';
 import 'package:http/http.dart' as http;
 
 import '../services/api_service.dart';
-import '../config.dart';
 import '../models/login_request_model.dart';
 import '../mainScreen.Dart';
 import '../models/login_response_model.dart';
 
 class LoginScreen extends StatefulWidget {
-  final Function(int, String, String)
-      onChangedStep; // ? la je suis definie une methode obligatoire le changestep qui a un int "index" puis les deux string mdp login
   LoginScreen({
     Key? key,
-    required this.onChangedStep,
   }) : super(key: key);
 
   @override
@@ -254,12 +247,8 @@ class _LoginScreenState extends State<LoginScreen> {
         onPressed: () async => {
           if (await _signInWithGoogle())
             {
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => mainScreen(
-                            onChangedStep: (Z) {},
-                          ))),
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => mainScreen())),
             }
           else
             {},
@@ -308,12 +297,8 @@ class _LoginScreenState extends State<LoginScreen> {
 
   Widget _buildSignupBtn() {
     return GestureDetector(
-      onTap: () => Navigator.push(
-          context,
-          MaterialPageRoute(
-              builder: (context) => InscriptionScreen(
-                    onChangedStep: (inta, stringa, string) {},
-                  ))),
+      onTap: () => Navigator.push(context,
+          MaterialPageRoute(builder: (context) => InscriptionScreen())),
       child: RichText(
         text: TextSpan(
           children: [
