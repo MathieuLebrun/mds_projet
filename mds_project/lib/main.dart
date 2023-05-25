@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'guest.dart';
+import 'views/accueilScreen.dart';
 
 void main() async {
   // ? async parce que genre faut attendre que sa charge la connexion avec la base
@@ -17,10 +17,10 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
+    return MaterialApp(
       title: 'Flutter Demo',
       home:
-          GuestScreen(), //   ? Du coup en vue principal on lui dit d'aller au gestionnaire de view1
+          AccueilScreen(), //   ? Du coup en vue principal on lui dit d'aller au gestionnaire de view1
     );
   }
 }
