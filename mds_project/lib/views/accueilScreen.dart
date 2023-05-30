@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mds_project/views/inscription.dart';
 
-import '../login.dart';
+import 'login.dart';
 
 class AccueilScreen extends StatefulWidget {
   // ? la je suis definie une methode obligatoire le changestep qui a un int "index" puis les deux string mdp login
@@ -55,7 +55,7 @@ class _AccueilScreenState extends State<AccueilScreen> {
                     Border(bottom: BorderSide(color: Colors.black, width: 2)),
               ),
               child: Text(
-                "Lorem ipsum dolor sit amet, consecteturadipiscing elit, sed do eiusmod temporincididunt ut labore et dolore magna aliqua.Ut enim ad minim veniam, quis nostrudexercitation ullamco laboris nisi ut aliquipex ea commodo consequat.",
+                "Devenez un Z'héros de la révision et rejoignez notre communauté de super-élèves ! Inscrivez-vous dès maintenant pour accéder à notre programme de révision ludique et efficace.",
                 style: TextStyle(
                     color: Colors.black,
                     fontSize: 20,
@@ -117,7 +117,7 @@ class _AccueilScreenState extends State<AccueilScreen> {
               child: const Center(
                 child: Text("Se connecter",
                     style: TextStyle(
-                        color: Colors.white,
+                        color: Colors.black,
                         fontSize: 25,
                         fontFamily: 'Helvetica')),
               ),
