@@ -1,14 +1,11 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:mds_project/models/login_request_model.dart';
-import 'package:mds_project/models/register_response_model.dart';
 import 'package:mds_project/models/register_request_model.dart';
 import 'package:mds_project/models/score_modify_model.dart';
 import 'package:mds_project/services/persistancehandler.dart';
 
-import '../models/params_requets_model.dart';
 import '../models/score_response_model.dart';
-import '../models/user.dart';
 
 class APIService {
   static var client = http.Client();
@@ -73,29 +70,13 @@ class APIService {
     }
   }
 
-  Future<http.Response> updateUserParams(
-      String username, ParamsModel model) async {
-    var accesToken = await PersistanceHandler().getTokenEDP();
-
-    final response = await http.put(
-      Uri.parse('http://162.19.230.6:5000/api/users/$username'),
-      headers: {
-        //  'Authorization': 'Bearer $accessToken',
-        'Content-Type': 'application/json',
-      },
-      body: jsonEncode(model.toJson()),
-    );
-
-    return response;
-  }
-
   Future<http.Response> delUser(String username) async {
-    var accesToken = await PersistanceHandler().getTokenEDP();
+    var accessToken = await PersistanceHandler().getTokenEDP();
 
     final response = await http.delete(
       Uri.parse('http://162.19.230.6:5000/api/rm/$username'),
       headers: {
-        //  'Authorization': 'Bearer $accessToken',
+        'token': 'Bearer $accessToken',
         'Content-Type': 'application/json',
       },
     );
