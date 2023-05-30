@@ -1,11 +1,119 @@
 import 'package:flutter/material.dart';
-import 'package:mds_project/mainScreen.dart';
+import 'package:mds_project/views/mainScreen.dart';
 import 'package:mds_project/services/api_service.dart';
 import 'package:mds_project/services/persistancehandler.dart';
-
+import '../models/score_response_model.dart';
+import '../utilities/global.dart';
 import '../models/score_modify_model.dart';
 
+class Questionnaire extends StatefulWidget {
+  final String question;
+  final int index;
+  final String matiere;
+  const Questionnaire(
+      {required this.question, required this.index, required this.matiere});
+  @override
+  _QuestionnaireState createState() => _QuestionnaireState();
+}
+
+class _QuestionnaireState extends State<Questionnaire> {
+  late List<Map<String, Object>> question;
+  bool dataisready = false;
+  @override
+  void initState() {
+    // ? La méthode init state c'est une méthode lancer une seule fois quand on arriver dans une view donc au lancement dans l'app on va dans le gestionnaire puis cette methode utiliser qu'une fois
+    super.initState();
+    selectQuestionnaire();
+    print(widget.index);
+    print(widget.matiere);
+    print(widget.question);
+  }
+
+  void selectQuestionnaire() {
+    switch (widget.question) {
+      case "Math1":
+        {
+          question = Math1;
+          dataisready = true;
+        }
+        break;
+      case "Math2":
+        {
+          question = Math2;
+          dataisready = true;
+        }
+        break;
+
+      case "Math3":
+        {
+          question = Math3;
+          dataisready = true;
+        }
+        break;
+      case "Anglais1":
+        {
+          question = Anglais1;
+          dataisready = true;
+        }
+        break;
+      case "Anglais2":
+        {
+          question = Anglais2;
+          dataisready = true;
+        }
+        break;
+      case "Anglais3":
+        {
+          question = Anglais3;
+          dataisready = true;
+        }
+        break;
+      case "Francais1":
+        {
+          question = Francais1;
+          dataisready = true;
+        }
+        break;
+      case "Francais2":
+        {
+          question = Francais2;
+          dataisready = true;
+        }
+        break;
+      case "Francais3":
+        {
+          question = Francais2;
+          dataisready = true;
+        }
+        break;
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+        appBar: AppBar(
+          title: const Text('Questionnaire'),
+        ),
+        body: (dataisready)
+            ? QuestionnairePage(
+                questions: question,
+                index: widget.index,
+                matiere: widget.matiere,
+              )
+            : const CircularProgressIndicator());
+  }
+}
+
 class QuestionnairePage extends StatefulWidget {
+  final List<Map<String, Object>> questions;
+  final int index;
+  final String matiere;
+  QuestionnairePage({
+    required this.questions,
+    required this.index,
+    required this.matiere,
+  });
   @override
   _QuestionnairePageState createState() => _QuestionnairePageState();
 }
@@ -13,46 +121,7 @@ class QuestionnairePage extends StatefulWidget {
 class _QuestionnairePageState extends State<QuestionnairePage> {
   int _questionIndex = 0;
   int _score = 0;
-
-  final List<Map<String, Object>> _questions = [
-    {
-      'questionText': 'Quelle est la valeur de pi ?',
-      'answers': [
-        {'text': '3', 'score': 0},
-        {'text': '3,14', 'score': 1},
-        {'text': '3,1416', 'score': 0},
-        {'text': '22/7', 'score': 0},
-      ],
-    },
-    {
-      'questionText': 'Quelle est la formule de l\'aire d\'un carré ?',
-      'answers': [
-        {'text': 'A = c x c', 'score': 1},
-        {'text': 'A = l x L', 'score': 0},
-        {'text': 'A = (c + c) x (c + c)', 'score': 0},
-        {'text': 'A = c²', 'score': 0},
-      ],
-    },
-    {
-      'questionText': 'Quelle est la formule de l\'aire d\'un rectangle ?',
-      'answers': [
-        {'text': 'A = c x c', 'score': 0},
-        {'text': 'A = l x L', 'score': 1},
-        {'text': 'A = (c + c) x (c + c)', 'score': 0},
-        {'text': 'A = l x h', 'score': 0},
-      ],
-    },
-    {
-      'questionText':
-          'Quelle est la formule de la circonférence d\'un cercle ?',
-      'answers': [
-        {'text': 'C = 2 x pi x r', 'score': 1},
-        {'text': 'C = pi x r²', 'score': 0},
-        {'text': 'C = l x L', 'score': 0},
-        {'text': 'C = 2 x r', 'score': 0},
-      ],
-    },
-  ];
+  bool repondu = false;
 
   void _answerQuestion(int score) {
     setState(() {
@@ -71,16 +140,13 @@ class _QuestionnairePageState extends State<QuestionnairePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Questionnaire'),
-      ),
-      body: _questionIndex < _questions.length
+      body: _questionIndex < widget.questions.length
           ? Quiz(
               questionIndex: _questionIndex,
-              questions: _questions,
+              questions: widget.questions,
               answerQuestion: _answerQuestion,
             )
-          : Result(_score, _resetQuestionnaire),
+          : Result(_score, _resetQuestionnaire, widget.index, widget.matiere),
     );
   }
 }
@@ -123,10 +189,10 @@ class Question extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: double.infinity,
-      margin: EdgeInsets.all(10),
+      margin: const EdgeInsets.all(10),
       child: Text(
         questionText,
-        style: TextStyle(
+        style: const TextStyle(
           fontSize: 24,
           fontWeight: FontWeight.bold,
         ),
@@ -146,11 +212,11 @@ class Answer extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: double.infinity,
-      margin: EdgeInsets.symmetric(horizontal: 20, vertical: 5),
+      margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 5),
       child: ElevatedButton(
         style: ElevatedButton.styleFrom(
-          primary: Colors.blue,
-          onPrimary: Colors.white,
+          foregroundColor: Colors.white,
+          backgroundColor: Colors.blue,
         ),
         child: Text(answerText),
         onPressed: selectHandler,
@@ -162,8 +228,11 @@ class Answer extends StatelessWidget {
 class Result extends StatelessWidget {
   final int score;
   final VoidCallback resetHandler;
+  final int index;
+  final String matiere;
 
-  Result(this.score, this.resetHandler);
+  const Result(this.score, this.resetHandler, this.index, this.matiere,
+      {super.key});
 
   String get resultPhrase {
     String resultText;
@@ -177,66 +246,104 @@ class Result extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        Text(
-          resultPhrase,
-          style: TextStyle(
-            fontSize: 24,
-            fontWeight: FontWeight.bold,
+    return Center(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Text(
+            resultPhrase,
+            style: const TextStyle(
+              fontSize: 24,
+              fontWeight: FontWeight.bold,
+            ),
+            textAlign: TextAlign.center,
           ),
-          textAlign: TextAlign.center,
-        ),
-        SizedBox(height: 10),
-        Text(
-          'Score : $score / 4',
-          style: TextStyle(fontSize: 18),
-        ),
-        SizedBox(height: 10),
-        ElevatedButton(
-          style: ElevatedButton.styleFrom(
-            primary: Colors.blue,
-            onPrimary: Colors.white,
+          const SizedBox(height: 10),
+          Text(
+            'Score : $score ',
+            style: const TextStyle(fontSize: 18),
           ),
-          child: Text("recommencer"),
-          onPressed: resetHandler,
-        ),
-        // la ici rajouter le setteur du score et le button pour revenir a l'écran principal
-        ElevatedButton(
+          const SizedBox(height: 10),
+          ElevatedButton(
             style: ElevatedButton.styleFrom(
               primary: Colors.blue,
               onPrimary: Colors.white,
             ),
-            child: Text("Je retourne dans l'écran principal mon gaté"),
-            onPressed: () async {
-              ScoreModifyModel model = ScoreModifyModel(
-                category: 'math',
-                value: [
-                  score,
-                  score,
-                  score,
-                  score,
-                  score,
-                  score,
-                  score,
-                  score,
-                  score,
-                  score
-                ],
-              );
-              String? accesToken = await PersistanceHandler().getTokenEDP();
-              String? id = await PersistanceHandler().getID();
-              var response =
-                  await APIService().addOrUpdateScore(id!, accesToken!, model);
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => mainScreen(
-                            onChangedStep: (int) {},
-                          )));
-            }),
-      ],
+            child: const Text("recommencer"),
+            onPressed: resetHandler,
+          ),
+          // la ici rajouter le setteur du score et le button pour revenir a l'écran principal
+          const SizedBox(height: 10),
+          ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                foregroundColor: Colors.white,
+                backgroundColor: Colors.blue,
+              ),
+              child: const Text("Je retourne dans l'écran principal"),
+              onPressed: () async {
+                String? accesToken = await PersistanceHandler().getTokenEDP();
+                String? id = await PersistanceHandler().getID();
+                List<ScoreResponseModel> scores =
+                    await APIService().getScores(id!, accesToken!);
+                scoreUpdated(score, scores, index, matiere);
+
+                ScoreModifyModel? model =
+                    scoreUpdated(score, scores, index, matiere);
+
+                var response =
+                    await APIService().addOrUpdateScore(id, accesToken, model!);
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const mainScreen()));
+              }),
+        ],
+      ),
     );
+  }
+
+  ScoreModifyModel? scoreUpdated(
+      int score, List<ScoreResponseModel> scores, int index, String matiere) {
+    print(index);
+    print(matiere);
+    print(scores);
+    print(score);
+    if (matiere.toLowerCase() == "math") {
+      ScoreModifyModel scoreUpdated = ScoreModifyModel(
+          category: 'math', value: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]);
+      for (int j = 0; j < scores[0].value.length; j++) {
+        if (index == j) {
+          scoreUpdated.value[j] = score;
+        } else {
+          scoreUpdated.value[j] = scores[0].value[j];
+        }
+      }
+      return scoreUpdated;
+    }
+    if (matiere.toLowerCase() == "francais") {
+      ScoreModifyModel scoreUpdated = ScoreModifyModel(
+          category: 'francais', value: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]);
+      for (int j = 0; j < scores[1].value.length; j++) {
+        if (index == j) {
+          scoreUpdated.value[j] = score;
+        } else {
+          scoreUpdated.value[j] = scores[1].value[j];
+        }
+      }
+      return scoreUpdated;
+    }
+    if (matiere.toLowerCase() == "anglais") {
+      ScoreModifyModel scoreUpdated = ScoreModifyModel(
+          category: 'anglais', value: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]);
+      for (int j = 0; j < scores[2].value.length; j++) {
+        if (index == j) {
+          scoreUpdated.value[j] = score;
+        } else {
+          scoreUpdated.value[j] = scores[2].value[j];
+        }
+      }
+      return scoreUpdated;
+    }
+    return null;
   }
 }

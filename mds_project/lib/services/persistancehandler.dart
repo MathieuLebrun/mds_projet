@@ -22,4 +22,31 @@ class PersistanceHandler {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     return prefs.getString("ID");
   }
+
+  Future<String> setUsername(String value) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setString("User", value);
+    return value;
+  }
+
+  Future<String?> getUsername() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    return prefs.getString("User");
+  }
+
+  Future<String> setEmail(String value) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setString("email", value);
+    return value;
+  }
+
+  Future<String?> getEmail() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    return prefs.getString("email");
+  }
+
+  void clearPersistentData() async {
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    preferences.clear();
+  }
 }

@@ -1,15 +1,24 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'guest.dart';
-
+import 'package:window_size/window_size.dart';
+import 'views/accueilScreen.dart';
 
 void main() async {
-  // ? async parce que genre faut attendre que sa charge la connexion avec la base
   WidgetsFlutterBinding.ensureInitialized();
+  // Vérifie la plateforme et effectue des actions spécifiques à chaque plateforme
+  if (Platform.isWindows || Platform.isLinux || Platform.isMacOS) {
+    // Définit le titre de la fenêtre
+    setWindowTitle('Zhéros');
+    // Définit la taille maximale et minimale de la fenêtre
+    setWindowMaxSize(const Size(700, 900));
+    setWindowMinSize(const Size(700, 900));
+  }
+  // Définit les orientations autorisées pour l'application
   await SystemChrome.setPreferredOrientations(
     [DeviceOrientation.portraitUp],
-  ); //  ? EN GROS  on lance une application donc un main qui a pour context une premier vue genre un layout
-  // !  la faut que je rajoute les dependencies pour relier a la base fire base https://console.firebase.google.com/project/mydigitalproject/overview
+  );
   runApp(const MyApp());
 }
 
@@ -18,10 +27,9 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
-      title: 'Flutter Demo',
-      home:
-          GuestScreen(), //   ? Du coup en vue principal on lui dit d'aller au gestionnaire de view1
+    return MaterialApp(
+      title: 'Zhéros',
+      home: AccueilScreen(),
     );
   }
 }

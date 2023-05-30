@@ -1,9 +1,10 @@
 import 'dart:async';
-import 'dart:io';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:model_viewer_plus/model_viewer_plus.dart';
 import 'package:video_player/video_player.dart';
+
+import './mainScreen.Dart';
 
 class coursScreen extends StatefulWidget {
   coursScreen();
@@ -14,6 +15,7 @@ class coursScreen extends StatefulWidget {
 
 class _coursScreenState extends State<coursScreen> {
   late VideoPlayerController _controller;
+
   bool _isPlaying = false;
 
   bool _showButton = false;
@@ -26,11 +28,12 @@ class _coursScreenState extends State<coursScreen> {
         _showButton = true;
       });
     });
-
-    _controller = VideoPlayerController.asset('assets/video/math.mp4')
-      ..initialize().then((_) {
-        setState(() {});
-      });
+    if (!kIsWeb) {
+      _controller = VideoPlayerController.asset('assets/video/math.mp4')
+        ..initialize().then((_) {
+          setState(() {});
+        });
+    }
   }
 
   @override
@@ -53,56 +56,54 @@ class _coursScreenState extends State<coursScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Cours de drill UK 2022'),
-      ),
       body: Column(
         children: [
-          Center(
-            child: _controller.value.isInitialized
-                ? GestureDetector(
-                    onTap: _togglePlayPause,
-                    child: Stack(
-                      children: [
-                        AspectRatio(
-                          aspectRatio: _controller.value.aspectRatio,
-                          child: VideoPlayer(_controller),
-                        ),
-                      ],
-                    ),
-                  )
-                : SizedBox(),
-          ),
+          (kIsWeb)
+              ? Container(
+                  margin: EdgeInsets.fromLTRB(40, 0, 40, 0),
+                  padding: EdgeInsets.only(bottom: 20),
+                  decoration: BoxDecoration(
+                    border: Border(
+                        bottom: BorderSide(color: Colors.black, width: 2)),
+                  ),
+                  child: Text(
+                    "Lorem ipsum dolor sit amet, consecteturadipiscing elit, sed do eiusmod temporincididunt ut labore et dolore magna aliqua.Ut enim ad minim veniam, quis nostrudexercitation ullamco laboris nisi ut aliquipex ea commodo consequat.Lorem ipsum dolor sit amet, consecteturadipiscing elit, sed do eiusmod temporincididunt ut labore et dolore magna aliqua.Ut enim ad minim veniam, quis nostrudexercitation ullamco laboris nisi ut aliquipex ea commodo consequat.Lorem ipsum dolor sit amet, consecteturadipiscing elit, sed do eiusmod temporincididunt ut labore et dolore magna aliqua.Ut enim ad minim veniam, quis nostrudexercitation ullamco laboris nisi ut aliquipex ea commodo consequat.Lorem ipsum dolor sit amet, consecteturadipiscing elit, sed do eiusmod temporincididunt ut labore et dolore magna aliqua.Ut enim ad minim veniam, quis nostrudexercitation ullamco laboris nisi ut aliquipex ea commodo consequat.",
+                    style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 20,
+                        fontFamily: 'Helvetica',
+                        height: 1.3),
+                  ),
+                )
+              : Container(
+                  margin: const EdgeInsets.fromLTRB(0, 200, 0, 100),
+                  child: Center(
+                    child: _controller.value.isInitialized
+                        ? GestureDetector(
+                            onTap: _togglePlayPause,
+                            child: Stack(
+                              children: [
+                                AspectRatio(
+                                  aspectRatio: _controller.value.aspectRatio,
+                                  child: VideoPlayer(_controller),
+                                ),
+                              ],
+                            ),
+                          )
+                        : SizedBox(),
+                  ),
+                ),
           if (_showButton)
             ElevatedButton(
               onPressed: () {
-                /*
                 Navigator.push(
                     context,
                     MaterialPageRoute(
-                        builder: (context) => CategoryPage(
-                            category: categories
-                                .first)));  */ // action à effectuer lors du clic sur le bouton
+                        builder: (context) =>
+                            mainScreen())); // action à effectuer lors du clic sur le bouton
               },
-              child: Text("Passer à l'exercice"),
+              child: Text("Retour a l'écran principal"),
             ),
-          SizedBox(
-            width: 500,
-            height: 396,
-            child: ModelViewer(
-              // backgroundColor: Color.fromARGB(0xFF, 0xEE, 0xEE, 0xEE),
-              src: 'assets/clavier.gltf', // a bundled asset file
-              alt: "A 3D model of an astronaut",
-              ar: true,
-              //arModes: ['scene-viewer', 'webxr', 'quick-look'],
-              autoRotate: true,
-              autoPlay: true,
-              // src: 'https://modelviewer.dev/shared-assets/models/Astronaut.glb',
-              cameraControls: true,
-              //  iosSrc: 'https://modelviewer.dev/shared-assets/models/Astronaut.usdz',
-              // disableZoom: true,
-            ),
-          ),
         ],
       ),
     );

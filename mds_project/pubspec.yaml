@@ -35,23 +35,21 @@ dependencies:
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.2
-  firebase_core: ^2.4.1
-  firebase_auth: ^4.2.5
   font_awesome_flutter: ^10.3.0
   google_fonts: ^3.0.1
-  cloud_firestore: ^4.3.1
-  firebase_database: ^10.0.9
-  api_cache_manager: ^1.0.2
-  snippet_coder_utils: ^1.0.9
   http: ^0.13.5
   shared_preferences: ^2.0.17
-  flame: ^1.6.0
-  lottie: ^2.3.0
   video_player: ^2.6.1
-  model_viewer_plus: ^1.5.0
+  dcdg: ^4.1.0
+  window_size:
+    git:
+      url: https://github.com/google/flutter-desktop-embedding
+      path: plugins/window_size
 
 dev_dependencies:
   flutter_test:
+    sdk: flutter
+  integration_test:
     sdk: flutter
 
   # The "flutter_lints" package below contains a set of recommended lints to
@@ -72,23 +70,17 @@ flutter:
   uses-material-design: true
 
   assets:
-    - assets/anime.gif
-    - assets/component_3_d_icons_copy.gltf
-    - assets/2CylinderEngine.glb
-    - assets/testv2.glb
-    - assets/google.jpg
-    - assets/fb.jpg
-    - assets/test.jpg
-    - assets/testcarr.jpg
-    - assets/gifdanseshelou.gif
-    - assets/gifdanseshelou2.gif
     - assets/images/pn2.png
-    - assets/images/background.png
-    - assets/images/sprintesheet.png
-    - assets/images/background2.png
-    - assets/test.json
     - assets/video/math.mp4
-    - assets/clavier.gltf
+    - assets/images/LogoAppMob.png
+    - assets/images/Logo1etoile.png
+    - assets/images/Logo2etoile.png
+    - assets/images/LogoBoss1etoile.png
+    - assets/images/LogoBoss2etoile.png
+    - assets/images/LogoBoss3etoile.png
+    - assets/images/Logo3etoile.png
+    - assets/images/Etoileblock.png
+    - assets/images/LogoAppMobLaunch.png
 
   # To add assets to your application, add an assets section, like this:
   # assets:
