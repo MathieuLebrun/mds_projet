@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import '../../services/api_service.dart';
 
-import '../login.dart';
+import './login.dart';
 import '../models/register_request_model.dart';
 import '../utilities/constant.dart';
 

@@ -7,10 +7,9 @@ import 'package:mds_project/services/persistancehandler.dart';
 import 'package:mds_project/views/questionnaire.dart';
 
 import './login.dart';
-import '../models/params_requets_model.dart';
 import 'coursScreen.dart';
 import 'coursScreenDesktop.dart';
-import 'draganddropScreen.dart';
+import 'statistiqueScreen.dart';
 import '../utilities/global.dart';
 
 class mainScreen extends StatefulWidget {
@@ -97,7 +96,7 @@ class _mainScreenState extends State<mainScreen> {
                 Navigator.push(
                     context,
                     MaterialPageRoute(
-                        builder: (context) => coursScreenDesktop()));
+                        builder: (context) => CoursScreenDesktop()));
               } else {
                 Navigator.push(context,
                     MaterialPageRoute(builder: (context) => coursScreen()));
@@ -108,7 +107,7 @@ class _mainScreenState extends State<mainScreen> {
               alignment: Alignment(0, -0),
               height: (hauteurEcran / fractionEcran),
               width: 250,
-              child: monWidget(widthFactorImg, heightFactorImg, "Logo1etoile"),
+              child: monWidget(widthFactorImg, heightFactorImg, "courslogo"),
             ),
           ),
           GestureDetector(
@@ -126,7 +125,7 @@ class _mainScreenState extends State<mainScreen> {
               height: (hauteurEcran / fractionEcran),
               color: currentcolorsMain,
               alignment: Alignment(-0.3, -0),
-              child: monWidget(widthFactorImg, heightFactorImg, "Logo2etoile"),
+              child: monWidget(widthFactorImg, heightFactorImg, "Logo1etoile"),
             ),
           ),
           GestureDetector(
@@ -144,7 +143,7 @@ class _mainScreenState extends State<mainScreen> {
               height: (hauteurEcran / fractionEcran),
               color: currentcolorsMain,
               alignment: Alignment(-0.5, -0),
-              child: monWidget(widthFactorImg, heightFactorImg, "Logo3etoile"),
+              child: monWidget(widthFactorImg, heightFactorImg, "Logo2etoile"),
             ),
           ),
           Container(
@@ -163,14 +162,14 @@ class _mainScreenState extends State<mainScreen> {
                       Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => QuestionnairePage(
-                                    questions: Math2,
+                              builder: (context) => Questionnaire(
+                                    question: '${currentMatiere}3',
                                     index: 2,
                                     matiere: currentMatiere,
                                   )));
                     },
                     child: Container(
-                      child: monWidget(1.0, heightFactorImg, "LogoBoss1etoile"),
+                      child: monWidget(1.0, heightFactorImg, "Logo3etoile"),
                     ),
                   ),
                 ),
@@ -190,19 +189,20 @@ class _mainScreenState extends State<mainScreen> {
             alignment: Alignment(0, -0),
             height: (hauteurEcran / fractionEcran),
             width: 250,
-            child: monWidget(widthFactorImg, heightFactorImg, "Logo1etoile"),
+            child:
+                monWidget(widthFactorImg, heightFactorImg, "LogoBoss1etoile"),
           ),
           Container(
             height: (hauteurEcran / fractionEcran),
             color: currentcolorsMain,
             alignment: Alignment(0.3, -0),
-            child: monWidget(widthFactorImg, heightFactorImg, "Logo2etoile"),
+            child: monWidget(widthFactorImg, heightFactorImg, "courslogo"),
           ),
           Container(
             height: (hauteurEcran / fractionEcran),
             color: currentcolorsMain,
             alignment: Alignment(0.5, -0),
-            child: monWidget(widthFactorImg, heightFactorImg, "Logo3etoile"),
+            child: monWidget(widthFactorImg, heightFactorImg, "Logo1etoile"),
           ),
           Container(
             color: currentcolorsMain,
@@ -221,7 +221,7 @@ class _mainScreenState extends State<mainScreen> {
                 ),
                 Expanded(
                   child: Container(
-                    child: monWidget(1.0, heightFactorImg, "LogoBoss2etoile"),
+                    child: monWidget(1.0, heightFactorImg, "Logo2etoile"),
                   ),
                 ),
                 SizedBox(
@@ -235,7 +235,7 @@ class _mainScreenState extends State<mainScreen> {
             alignment: Alignment(0, -0),
             height: (hauteurEcran / fractionEcran),
             width: 250,
-            child: monWidget(widthFactorImg, heightFactorImg, "Logo1etoile"),
+            child: monWidget(widthFactorImg, heightFactorImg, "Logo3etoile"),
           ),
         ],
       ),
@@ -294,7 +294,7 @@ class _mainScreenState extends State<mainScreen> {
             currentcolors = const Color(0xFFc93626);
             currentcolorsMain = const Color.fromARGB(255, 252, 68, 28);
             Navigator.push(context,
-                MaterialPageRoute(builder: (context) => draganddropScreen()));
+                MaterialPageRoute(builder: (context) => StatistiqueScreen()));
           }
           break;
         case 3:
