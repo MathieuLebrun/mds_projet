@@ -13,27 +13,28 @@ class InscriptionScreen extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  _InscriptionScreenState createState() => _InscriptionScreenState();
+  InscriptionScreenState createState() => InscriptionScreenState();
 }
 
-class _InscriptionScreenState extends State<InscriptionScreen> {
-  bool _isSecret = true; // ? boolean pour cacher le mdp je crois
+class InscriptionScreenState extends State<InscriptionScreen> {
   final emailcontroller = TextEditingController();
   final mdpcontroller = TextEditingController();
 
   var dropdownValue = "";
   List<String> listDropDownWhereToSend = [];
 
-  String MessageErreur = "";
+  String messageErreur = "";
 
   final mdpusername = TextEditingController();
 
   @override
   initState() {
+    super.initState();
     setDropDownWhereToSend();
     dropdownValue = listDropDownWhereToSend[0];
   }
 
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: AnnotatedRegion<SystemUiOverlayStyle>(
@@ -74,14 +75,17 @@ class _InscriptionScreenState extends State<InscriptionScreen> {
                         IconButton(
                           icon: const Icon(size: 35, Icons.arrow_back_sharp),
                           onPressed: () {
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => LoginScreen()));
+                            if (context.mounted) {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) =>
+                                          const LoginScreen()));
+                            }
                           },
                         ),
                       ]),
-                      Text(
+                      const Text(
                         "S'inscrire",
                         style: TextStyle(
                           color: Colors.black,
@@ -91,17 +95,17 @@ class _InscriptionScreenState extends State<InscriptionScreen> {
                         ),
                       ),
                       Container(
-                        margin: EdgeInsets.fromLTRB(40, 0, 40, 0),
-                        padding: EdgeInsets.only(bottom: 20),
-                        decoration: BoxDecoration(
+                        margin: const EdgeInsets.fromLTRB(40, 0, 40, 0),
+                        padding: const EdgeInsets.only(bottom: 20),
+                        decoration: const BoxDecoration(
                           border: Border(
                               bottom:
                                   BorderSide(color: Colors.black, width: 2)),
                         ),
                       ),
-                      SizedBox(height: 30.0),
+                      const SizedBox(height: 30.0),
                       _buildEmailTF(),
-                      SizedBox(
+                      const SizedBox(
                         height: 30.0,
                       ),
                       _buildPasswordTF(),
@@ -147,7 +151,7 @@ class _InscriptionScreenState extends State<InscriptionScreen> {
           child: TextField(
             controller: emailcontroller,
             keyboardType: TextInputType.emailAddress,
-            style: TextStyle(
+            style: const TextStyle(
               color: Colors.black,
               fontFamily: 'OpenSans',
             ),
@@ -205,13 +209,15 @@ class _InscriptionScreenState extends State<InscriptionScreen> {
     String marcel = await APIService.register(model);
     if (marcel != "404") {
       showInSnackBar("✅");
-      Navigator.push(
-        context,
-        MaterialPageRoute(builder: (context) => LoginScreen()),
-      );
+      if (context.mounted) {
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => const LoginScreen()),
+        );
+      }
     } else {
-      MessageErreur = "Erreur de connexion ";
-      showInSnackBar(MessageErreur);
+      messageErreur = "Erreur de connexion ";
+      showInSnackBar(messageErreur);
       return false;
     }
 
@@ -239,7 +245,7 @@ class _InscriptionScreenState extends State<InscriptionScreen> {
     return Container(
       width: 200,
       height: 200,
-      decoration: BoxDecoration(
+      decoration: const BoxDecoration(
         shape: BoxShape.circle,
         gradient: RadialGradient(
           colors: [
@@ -256,7 +262,7 @@ class _InscriptionScreenState extends State<InscriptionScreen> {
     return Container(
       width: 90,
       height: 90,
-      decoration: BoxDecoration(
+      decoration: const BoxDecoration(
         shape: BoxShape.circle,
         gradient: LinearGradient(
           colors: [
@@ -273,10 +279,10 @@ class _InscriptionScreenState extends State<InscriptionScreen> {
 
   Widget _buildLilbulle2() {
     return Container(
-      margin: EdgeInsets.fromLTRB(150, 0, 0, 0),
+      margin: const EdgeInsets.fromLTRB(150, 0, 0, 0),
       width: 65,
       height: 65,
-      decoration: BoxDecoration(
+      decoration: const BoxDecoration(
         shape: BoxShape.circle,
         gradient: LinearGradient(
           colors: [
@@ -302,7 +308,7 @@ class _InscriptionScreenState extends State<InscriptionScreen> {
         // elevation: 5.0,
         onPressed: () async => {
           if (await _signInWithGoogle())
-            {MaterialPageRoute(builder: (context) => LoginScreen())}
+            {MaterialPageRoute(builder: (context) => const LoginScreen())}
           else
             {},
         },
@@ -339,7 +345,7 @@ class _InscriptionScreenState extends State<InscriptionScreen> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          Text(
+          const Text(
             'Sélectionnez une année',
             style: kLabelStyle,
           ),
@@ -378,14 +384,14 @@ class _InscriptionScreenState extends State<InscriptionScreen> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
-        SizedBox(height: 10.0),
+        const SizedBox(height: 10.0),
         Container(
           alignment: Alignment.centerLeft,
           decoration: kBoxDecorationStyle,
           height: 60.0,
           child: TextField(
             controller: mdpusername,
-            style: TextStyle(
+            style: const TextStyle(
               color: Colors.black,
               fontFamily: 'OpenSans',
             ),
@@ -405,7 +411,7 @@ class _InscriptionScreenState extends State<InscriptionScreen> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
-        SizedBox(height: 10.0),
+        const SizedBox(height: 10.0),
         Container(
           alignment: Alignment.centerLeft,
           decoration: kBoxDecorationStyle,
@@ -413,7 +419,7 @@ class _InscriptionScreenState extends State<InscriptionScreen> {
           child: TextField(
             controller: mdpcontroller,
             obscureText: true,
-            style: TextStyle(
+            style: const TextStyle(
               color: Colors.black,
               fontFamily: 'OpenSans',
             ),

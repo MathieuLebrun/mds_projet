@@ -8,10 +8,10 @@ class CoursScreenDesktop extends StatefulWidget {
   const CoursScreenDesktop({super.key});
 
   @override
-  _CoursScreenDesktopState createState() => _CoursScreenDesktopState();
+  CoursScreenDesktopState createState() => CoursScreenDesktopState();
 }
 
-class _CoursScreenDesktopState extends State<CoursScreenDesktop> {
+class CoursScreenDesktopState extends State<CoursScreenDesktop> {
   bool _showButton = false;
 
   @override

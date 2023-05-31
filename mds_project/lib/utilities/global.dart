@@ -152,6 +152,20 @@ final List<Map<String, Object>> Francais2 = [
     ],
   },
 ];
+final List<Map<String, Object>> Francais3 = [
+  {
+    'questionText': '''Qu'est-ce qu'un oxymore en littérature ?''',
+    'answers': [
+      {
+        'text': 'Une figure de style qui associe deux termes contradictoires',
+        'score': 1
+      },
+      {'text': 'Un personnage principal', 'score': 0},
+      {'text': 'Un genre littéraire', 'score': 0},
+      {'text': 'Un procédé narratif', 'score': 0},
+    ],
+  },
+];
 
 final List<Map<String, Object>> Anglais1 = [
   {

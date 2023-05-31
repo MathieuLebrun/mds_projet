@@ -9,29 +9,25 @@ import 'package:mds_project/services/persistancehandler.dart';
 import '../utilities/constant.dart';
 
 import '../../services/api_service.dart';
-import '../../models/login_request_model.dart';
 import './mainScreen.Dart';
 import '../../models/login_response_model.dart';
 
 class LoginScreen extends StatefulWidget {
-  LoginScreen({
+  const LoginScreen({
     Key? key,
   }) : super(key: key);
 
   @override
-  _LoginScreenState createState() => _LoginScreenState();
+  LoginScreenState createState() => LoginScreenState();
 }
 
-class _LoginScreenState extends State<LoginScreen> {
+class LoginScreenState extends State<LoginScreen> {
   late PersistanceHandler persistanceHandler;
-  bool _isSecret = true; // ? boolean pour cacher le mdp je crois
-  late String _login;
   final emailcontroller = TextEditingController();
   final mdpcontroller = TextEditingController();
 
-  String _motdepasse = '';
-  late String MessageErreur = '';
-  bool _rememberMe = false;
+  late String messageErreur = '';
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -44,7 +40,7 @@ class _LoginScreenState extends State<LoginScreen> {
               Container(
                 height: double.infinity,
                 width: double.infinity,
-                decoration: BoxDecoration(
+                decoration: const BoxDecoration(
                   gradient: LinearGradient(
                     begin: Alignment.topCenter,
                     end: Alignment.bottomCenter,
@@ -58,7 +54,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                 ),
               ),
-              Container(
+              SizedBox(
                 height: double.infinity,
                 child: SingleChildScrollView(
                   physics: const AlwaysScrollableScrollPhysics(),
@@ -74,7 +70,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           emailcontroller.text = "teo@garbarinoo.co";
                           mdpcontroller.text = "1234567";
                         },
-                        child: Text("BYPASS BY T£OX",
+                        child: const Text("BYPASS BY T£OX",
                             style: TextStyle(
                               color: Color(0xFF505050),
                               fontFamily: 'Asdaen',
@@ -90,9 +86,9 @@ class _LoginScreenState extends State<LoginScreen> {
                         ),
                       ),
                       Container(
-                        margin: EdgeInsets.fromLTRB(40, 0, 40, 0),
-                        padding: EdgeInsets.only(bottom: 20),
-                        decoration: BoxDecoration(
+                        margin: const EdgeInsets.fromLTRB(40, 0, 40, 0),
+                        padding: const EdgeInsets.only(bottom: 20),
+                        decoration: const BoxDecoration(
                           border: Border(
                               bottom:
                                   BorderSide(color: Colors.black, width: 2)),
@@ -128,7 +124,7 @@ class _LoginScreenState extends State<LoginScreen> {
           content: SingleChildScrollView(
             child: ListBody(
               children: <Widget>[
-                Text(MessageErreur),
+                Text(messageErreur),
               ],
             ),
           ),
@@ -161,7 +157,7 @@ class _LoginScreenState extends State<LoginScreen> {
       await PersistanceHandler().setEmail(loginResponse.email);
       return true;
     } else {
-      MessageErreur = "Connexion refusé";
+      messageErreur = "Connexion refusé";
       _showMyDialog();
       return false;
     }
@@ -171,7 +167,7 @@ class _LoginScreenState extends State<LoginScreen> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
-        SizedBox(height: 10.0),
+        const SizedBox(height: 10.0),
         Container(
           decoration: kBoxDecorationStyle,
           alignment: Alignment.centerLeft,
@@ -227,7 +223,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
   Widget _buildLoginBtn() {
     return Container(
-      padding: EdgeInsets.symmetric(vertical: 25.0),
+      padding: const EdgeInsets.symmetric(vertical: 25.0),
       width: double.infinity,
       child: ElevatedButton(
         key: const Key('login'),
@@ -245,14 +241,14 @@ class _LoginScreenState extends State<LoginScreen> {
           if (await _signInWithGoogle())
             {
               Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => mainScreen())),
+                  MaterialPageRoute(builder: (context) => const mainScreen())),
             }
           else
             {},
         },
         child: Container(
           decoration: BoxDecoration(
-            gradient: LinearGradient(
+            gradient: const LinearGradient(
               colors: [
                 Color(0xFFFFFFFF),
                 Color(0xFFF8C6FF),
@@ -265,8 +261,8 @@ class _LoginScreenState extends State<LoginScreen> {
             ),
             borderRadius: BorderRadius.circular(20),
           ),
-          padding: EdgeInsets.symmetric(vertical: 15.0),
-          child: Center(
+          padding: const EdgeInsets.symmetric(vertical: 15.0),
+          child: const Center(
             child: Text(
               'SE CONNECTER',
               style: TextStyle(
@@ -295,9 +291,9 @@ class _LoginScreenState extends State<LoginScreen> {
   Widget _buildSignupBtn() {
     return GestureDetector(
       onTap: () => Navigator.push(context,
-          MaterialPageRoute(builder: (context) => InscriptionScreen())),
+          MaterialPageRoute(builder: (context) => const InscriptionScreen())),
       child: RichText(
-        text: TextSpan(
+        text: const TextSpan(
           children: [
             TextSpan(
               text: 'Vous n\'avez pas de compte? ',
