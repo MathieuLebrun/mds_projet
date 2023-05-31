@@ -7,20 +7,18 @@ import 'package:mds_project/services/persistancehandler.dart';
 import 'package:mds_project/views/questionnaire.dart';
 
 import './login.dart';
-import '../models/params_requets_model.dart';
 import 'coursScreen.dart';
 import 'coursScreenDesktop.dart';
-import 'draganddropScreen.dart';
-import '../utilities/global.dart';
+import 'statistiqueScreen.dart';
 
 class mainScreen extends StatefulWidget {
-  const mainScreen({Key? key});
+  const mainScreen({super.key});
 
   @override
-  _mainScreenState createState() => _mainScreenState();
+  mainScreenState createState() => mainScreenState();
 }
 
-class _mainScreenState extends State<mainScreen> {
+class mainScreenState extends State<mainScreen> {
   String currentMatiere = "Math";
   TextEditingController emailController = TextEditingController();
   TextEditingController usernameController = TextEditingController();
@@ -41,7 +39,6 @@ class _mainScreenState extends State<mainScreen> {
 
   @override
   Widget build(BuildContext context) {
-    var largeurEcran = MediaQuery.of(context).size.width;
     var hauteurEcran = MediaQuery.of(context).size.height;
     var fractionEcran = 8;
     var widthFactorImg = 0.22;
@@ -97,18 +94,20 @@ class _mainScreenState extends State<mainScreen> {
                 Navigator.push(
                     context,
                     MaterialPageRoute(
-                        builder: (context) => coursScreenDesktop()));
+                        builder: (context) => const CoursScreenDesktop()));
               } else {
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => coursScreen()));
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const coursScreen()));
               }
             },
             child: Container(
               color: currentcolorsMain,
-              alignment: Alignment(0, -0),
+              alignment: const Alignment(0, -0),
               height: (hauteurEcran / fractionEcran),
               width: 250,
-              child: monWidget(widthFactorImg, heightFactorImg, "Logo1etoile"),
+              child: monWidget(widthFactorImg, heightFactorImg, "courslogo"),
             ),
           ),
           GestureDetector(
@@ -125,8 +124,8 @@ class _mainScreenState extends State<mainScreen> {
             child: Container(
               height: (hauteurEcran / fractionEcran),
               color: currentcolorsMain,
-              alignment: Alignment(-0.3, -0),
-              child: monWidget(widthFactorImg, heightFactorImg, "Logo2etoile"),
+              alignment: const Alignment(-0.3, -0),
+              child: monWidget(widthFactorImg, heightFactorImg, "Logo1etoile"),
             ),
           ),
           GestureDetector(
@@ -143,8 +142,8 @@ class _mainScreenState extends State<mainScreen> {
             child: Container(
               height: (hauteurEcran / fractionEcran),
               color: currentcolorsMain,
-              alignment: Alignment(-0.5, -0),
-              child: monWidget(widthFactorImg, heightFactorImg, "Logo3etoile"),
+              alignment: const Alignment(-0.5, -0),
+              child: monWidget(widthFactorImg, heightFactorImg, "Logo2etoile"),
             ),
           ),
           Container(
@@ -154,7 +153,7 @@ class _mainScreenState extends State<mainScreen> {
             child: Row(
               // mainAxisAlignment: MainAxisAlignment.end,
               children: <Widget>[
-                SizedBox(
+                const SizedBox(
                   width: 77,
                 ),
                 Expanded(
@@ -163,14 +162,14 @@ class _mainScreenState extends State<mainScreen> {
                       Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => QuestionnairePage(
-                                    questions: Math2,
+                              builder: (context) => Questionnaire(
+                                    question: '${currentMatiere}3',
                                     index: 2,
                                     matiere: currentMatiere,
                                   )));
                     },
                     child: Container(
-                      child: monWidget(1.0, heightFactorImg, "LogoBoss1etoile"),
+                      child: monWidget(1.0, heightFactorImg, "Logo3etoile"),
                     ),
                   ),
                 ),
@@ -179,7 +178,7 @@ class _mainScreenState extends State<mainScreen> {
                       //  child: monWidgetGIF(1.0, 4.0, "gifdanseshelou"),
                       ),
                 ),
-                SizedBox(
+                const SizedBox(
                   width: 20,
                 ),
               ],
@@ -187,22 +186,23 @@ class _mainScreenState extends State<mainScreen> {
           ),
           Container(
             color: currentcolorsMain,
-            alignment: Alignment(0, -0),
+            alignment: const Alignment(0, -0),
             height: (hauteurEcran / fractionEcran),
             width: 250,
+            child:
+                monWidget(widthFactorImg, heightFactorImg, "LogoBoss1etoile"),
+          ),
+          Container(
+            height: (hauteurEcran / fractionEcran),
+            color: currentcolorsMain,
+            alignment: const Alignment(0.3, -0),
+            child: monWidget(widthFactorImg, heightFactorImg, "courslogo"),
+          ),
+          Container(
+            height: (hauteurEcran / fractionEcran),
+            color: currentcolorsMain,
+            alignment: const Alignment(0.5, -0),
             child: monWidget(widthFactorImg, heightFactorImg, "Logo1etoile"),
-          ),
-          Container(
-            height: (hauteurEcran / fractionEcran),
-            color: currentcolorsMain,
-            alignment: Alignment(0.3, -0),
-            child: monWidget(widthFactorImg, heightFactorImg, "Logo2etoile"),
-          ),
-          Container(
-            height: (hauteurEcran / fractionEcran),
-            color: currentcolorsMain,
-            alignment: Alignment(0.5, -0),
-            child: monWidget(widthFactorImg, heightFactorImg, "Logo3etoile"),
           ),
           Container(
             color: currentcolorsMain,
@@ -221,10 +221,10 @@ class _mainScreenState extends State<mainScreen> {
                 ),
                 Expanded(
                   child: Container(
-                    child: monWidget(1.0, heightFactorImg, "LogoBoss2etoile"),
+                    child: monWidget(1.0, heightFactorImg, "Logo2etoile"),
                   ),
                 ),
-                SizedBox(
+                const SizedBox(
                   width: 77,
                 ),
               ],
@@ -232,10 +232,10 @@ class _mainScreenState extends State<mainScreen> {
           ),
           Container(
             color: currentcolorsMain,
-            alignment: Alignment(0, -0),
+            alignment: const Alignment(0, -0),
             height: (hauteurEcran / fractionEcran),
             width: 250,
-            child: monWidget(widthFactorImg, heightFactorImg, "Logo1etoile"),
+            child: monWidget(widthFactorImg, heightFactorImg, "Logo3etoile"),
           ),
         ],
       ),
@@ -293,8 +293,10 @@ class _mainScreenState extends State<mainScreen> {
           {
             currentcolors = const Color(0xFFc93626);
             currentcolorsMain = const Color.fromARGB(255, 252, 68, 28);
-            Navigator.push(context,
-                MaterialPageRoute(builder: (context) => draganddropScreen()));
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => const StatistiqueScreen()));
           }
           break;
         case 3:
@@ -303,7 +305,7 @@ class _mainScreenState extends State<mainScreen> {
             currentcolorsMain = const Color(0xFF848484);
             PersistanceHandler().clearPersistentData();
             Navigator.push(context,
-                MaterialPageRoute(builder: (context) => LoginScreen()));
+                MaterialPageRoute(builder: (context) => const LoginScreen()));
           }
           break;
 
@@ -339,24 +341,24 @@ class _mainScreenState extends State<mainScreen> {
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  Text(
+                  const Text(
                     'Suppresion du compte',
                     style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 20,
                   ),
-                  Text(
+                  const Text(
                     'Email',
                     style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
                   ),
                   TextField(
                     controller: emailController,
-                    decoration: InputDecoration(
+                    decoration: const InputDecoration(
                       border: InputBorder.none,
                     ),
                   ),
-                  Text(
+                  const Text(
                     'Username',
                     style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
                   ),
@@ -372,11 +374,13 @@ class _mainScreenState extends State<mainScreen> {
                       onPressed: () async {
                         var response = await _delUser();
                         if (response) {
-                          Navigator.of(context).pop();
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => LoginScreen()));
+                          if (context.mounted) {
+                            Navigator.of(context).pop();
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => const LoginScreen()));
+                          }
                         } else {}
                       },
                       style: ElevatedButton.styleFrom(

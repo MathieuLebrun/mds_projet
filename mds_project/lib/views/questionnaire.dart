@@ -1,3 +1,5 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:flutter/material.dart';
 import 'package:mds_project/views/mainScreen.dart';
 import 'package:mds_project/services/api_service.dart';
@@ -11,12 +13,15 @@ class Questionnaire extends StatefulWidget {
   final int index;
   final String matiere;
   const Questionnaire(
-      {required this.question, required this.index, required this.matiere});
+      {super.key,
+      required this.question,
+      required this.index,
+      required this.matiere});
   @override
-  _QuestionnaireState createState() => _QuestionnaireState();
+  QuestionnaireState createState() => QuestionnaireState();
 }
 
-class _QuestionnaireState extends State<Questionnaire> {
+class QuestionnaireState extends State<Questionnaire> {
   late List<Map<String, Object>> question;
   bool dataisready = false;
   @override
@@ -24,9 +29,6 @@ class _QuestionnaireState extends State<Questionnaire> {
     // ? La méthode init state c'est une méthode lancer une seule fois quand on arriver dans une view donc au lancement dans l'app on va dans le gestionnaire puis cette methode utiliser qu'une fois
     super.initState();
     selectQuestionnaire();
-    print(widget.index);
-    print(widget.matiere);
-    print(widget.question);
   }
 
   void selectQuestionnaire() {
@@ -109,16 +111,17 @@ class QuestionnairePage extends StatefulWidget {
   final List<Map<String, Object>> questions;
   final int index;
   final String matiere;
-  QuestionnairePage({
+  const QuestionnairePage({
+    super.key,
     required this.questions,
     required this.index,
     required this.matiere,
   });
   @override
-  _QuestionnairePageState createState() => _QuestionnairePageState();
+  QuestionnairePageState createState() => QuestionnairePageState();
 }
 
-class _QuestionnairePageState extends State<QuestionnairePage> {
+class QuestionnairePageState extends State<QuestionnairePage> {
   int _questionIndex = 0;
   int _score = 0;
   bool repondu = false;
@@ -155,7 +158,8 @@ class Quiz extends StatelessWidget {
   final List<Map<String, Object>> questions;
   final int questionIndex;
   final Function answerQuestion;
-  Quiz({
+  const Quiz({
+    super.key,
     required this.questions,
     required this.questionIndex,
     required this.answerQuestion,
@@ -183,7 +187,7 @@ class Quiz extends StatelessWidget {
 class Question extends StatelessWidget {
   final String questionText;
 
-  Question(this.questionText);
+  const Question(this.questionText, {super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -206,7 +210,7 @@ class Answer extends StatelessWidget {
   final String answerText;
   final VoidCallback selectHandler;
 
-  Answer(this.answerText, this.selectHandler);
+  const Answer(this.answerText, this.selectHandler, {super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -218,8 +222,8 @@ class Answer extends StatelessWidget {
           foregroundColor: Colors.white,
           backgroundColor: Colors.blue,
         ),
-        child: Text(answerText),
         onPressed: selectHandler,
+        child: Text(answerText),
       ),
     );
   }
@@ -266,11 +270,11 @@ class Result extends StatelessWidget {
           const SizedBox(height: 10),
           ElevatedButton(
             style: ElevatedButton.styleFrom(
-              primary: Colors.blue,
-              onPrimary: Colors.white,
+              foregroundColor: Colors.white,
+              backgroundColor: Colors.blue,
             ),
-            child: const Text("recommencer"),
             onPressed: resetHandler,
+            child: const Text("recommencer"),
           ),
           // la ici rajouter le setteur du score et le button pour revenir a l'écran principal
           const SizedBox(height: 10),
@@ -292,10 +296,12 @@ class Result extends StatelessWidget {
 
                 var response =
                     await APIService().addOrUpdateScore(id, accesToken, model!);
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => const mainScreen()));
+                if (context.mounted) {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const mainScreen()));
+                }
               }),
         ],
       ),
@@ -304,10 +310,6 @@ class Result extends StatelessWidget {
 
   ScoreModifyModel? scoreUpdated(
       int score, List<ScoreResponseModel> scores, int index, String matiere) {
-    print(index);
-    print(matiere);
-    print(scores);
-    print(score);
     if (matiere.toLowerCase() == "math") {
       ScoreModifyModel scoreUpdated = ScoreModifyModel(
           category: 'math', value: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]);

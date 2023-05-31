@@ -7,13 +7,13 @@ import 'package:video_player/video_player.dart';
 import './mainScreen.Dart';
 
 class coursScreen extends StatefulWidget {
-  coursScreen();
+  const coursScreen({super.key});
 
   @override
-  _coursScreenState createState() => _coursScreenState();
+  coursScreenState createState() => coursScreenState();
 }
 
-class _coursScreenState extends State<coursScreen> {
+class coursScreenState extends State<coursScreen> {
   late VideoPlayerController _controller;
 
   bool _isPlaying = false;
@@ -23,7 +23,7 @@ class _coursScreenState extends State<coursScreen> {
   @override
   void initState() {
     super.initState();
-    Timer(Duration(minutes: 3), () {
+    Timer(const Duration(minutes: 3), () {
       setState(() {
         _showButton = true;
       });
@@ -60,13 +60,13 @@ class _coursScreenState extends State<coursScreen> {
         children: [
           (kIsWeb)
               ? Container(
-                  margin: EdgeInsets.fromLTRB(40, 0, 40, 0),
-                  padding: EdgeInsets.only(bottom: 20),
-                  decoration: BoxDecoration(
+                  margin: const EdgeInsets.fromLTRB(40, 0, 40, 0),
+                  padding: const EdgeInsets.only(bottom: 20),
+                  decoration: const BoxDecoration(
                     border: Border(
                         bottom: BorderSide(color: Colors.black, width: 2)),
                   ),
-                  child: Text(
+                  child: const Text(
                     "Lorem ipsum dolor sit amet, consecteturadipiscing elit, sed do eiusmod temporincididunt ut labore et dolore magna aliqua.Ut enim ad minim veniam, quis nostrudexercitation ullamco laboris nisi ut aliquipex ea commodo consequat.Lorem ipsum dolor sit amet, consecteturadipiscing elit, sed do eiusmod temporincididunt ut labore et dolore magna aliqua.Ut enim ad minim veniam, quis nostrudexercitation ullamco laboris nisi ut aliquipex ea commodo consequat.Lorem ipsum dolor sit amet, consecteturadipiscing elit, sed do eiusmod temporincididunt ut labore et dolore magna aliqua.Ut enim ad minim veniam, quis nostrudexercitation ullamco laboris nisi ut aliquipex ea commodo consequat.Lorem ipsum dolor sit amet, consecteturadipiscing elit, sed do eiusmod temporincididunt ut labore et dolore magna aliqua.Ut enim ad minim veniam, quis nostrudexercitation ullamco laboris nisi ut aliquipex ea commodo consequat.",
                     style: TextStyle(
                         color: Colors.black,
@@ -90,7 +90,7 @@ class _coursScreenState extends State<coursScreen> {
                               ],
                             ),
                           )
-                        : SizedBox(),
+                        : const SizedBox(),
                   ),
                 ),
           if (_showButton)
@@ -100,9 +100,9 @@ class _coursScreenState extends State<coursScreen> {
                     context,
                     MaterialPageRoute(
                         builder: (context) =>
-                            mainScreen())); // action à effectuer lors du clic sur le bouton
+                            const mainScreen())); // action à effectuer lors du clic sur le bouton
               },
-              child: Text("Retour a l'écran principal"),
+              child: const Text("Retour a l'écran principal"),
             ),
         ],
       ),

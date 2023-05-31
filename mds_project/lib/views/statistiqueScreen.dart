@@ -1,18 +1,17 @@
-import 'dart:developer';
-import 'dart:math';
-
 import 'package:flutter/material.dart';
 
 import '../models/score_response_model.dart';
 import '../services/persistancehandler.dart';
 import '../services/api_service.dart';
 
-class draganddropScreen extends StatefulWidget {
+class StatistiqueScreen extends StatefulWidget {
+  const StatistiqueScreen({super.key});
+
   @override
-  _draganddropScreenState createState() => _draganddropScreenState();
+  StatistiqueScreenState createState() => StatistiqueScreenState();
 }
 
-class _draganddropScreenState extends State<draganddropScreen>
+class StatistiqueScreenState extends State<StatistiqueScreen>
     with TickerProviderStateMixin {
   late AnimationController _controller1;
   late AnimationController _controller2;
@@ -22,7 +21,7 @@ class _draganddropScreenState extends State<draganddropScreen>
   late Animation<double> _animation2;
   late Animation<double> _animation3;
 
-  List<ScoreResponseModel> ScoreAnimation = [];
+  List<ScoreResponseModel> scoreAnimation = [];
   String accesstoken = "";
   String id = "";
   bool dataIsready = false;
@@ -51,35 +50,36 @@ class _draganddropScreenState extends State<draganddropScreen>
     List<ScoreResponseModel> scores =
         await APIService().getScores(id, accesstoken);
     setState(() {
-      ScoreAnimation.addAll(scores);
-      for (int i = 0; i < ScoreAnimation.length; i++) {
+      scoreAnimation.addAll(scores);
+      for (int i = 0; i < scoreAnimation.length; i++) {
         int compteur = 0;
-        for (int j = 0; j < ScoreAnimation[i].value.length; j++) {
-          compteur += ScoreAnimation[i].value[j];
-          print(compteur);
+        for (int j = 0; j < scoreAnimation[i].value.length; j++) {
+          compteur += scoreAnimation[i].value[j];
         }
-        if (ScoreAnimation[i].category == "math") {
+        if (scoreAnimation[i].category == "math") {
           setState(() {
             scoremath = compteur.toDouble();
           });
-          if (ScoreAnimation[i].category == "anglais") {
-            setState(() {
-              scoreanglais = compteur.toDouble();
-            });
-          }
-          if (ScoreAnimation[i].category == "francais") {
-            setState(() {
-              scorefrancais = compteur.toDouble();
-            });
-          }
+        }
+
+        if (scoreAnimation[i].category == "anglais") {
+          setState(() {
+            scoreanglais = compteur.toDouble();
+          });
+        }
+        if (scoreAnimation[i].category == "francais") {
+          setState(() {
+            scorefrancais = compteur.toDouble();
+          });
         }
       }
     });
     setState(() {
       dataIsready = true;
+
       _controller1 = AnimationController(
         vsync: this,
-        duration: Duration(milliseconds: 2000),
+        duration: const Duration(milliseconds: 2000),
       )..forward(from: 0);
 
       _animation1 = Tween<double>(begin: 0, end: scoreanglais.toDouble())
@@ -87,7 +87,7 @@ class _draganddropScreenState extends State<draganddropScreen>
 
       _controller2 = AnimationController(
         vsync: this,
-        duration: Duration(milliseconds: 2000),
+        duration: const Duration(milliseconds: 2000),
       )..forward(from: 0);
 
       _animation2 = Tween<double>(begin: 0, end: scorefrancais.toDouble())
@@ -95,7 +95,7 @@ class _draganddropScreenState extends State<draganddropScreen>
 
       _controller3 = AnimationController(
         vsync: this,
-        duration: Duration(milliseconds: 2000),
+        duration: const Duration(milliseconds: 2000),
       )..forward(from: 0);
 
       _animation3 = Tween<double>(begin: 0, end: scoremath.toDouble())
@@ -113,7 +113,7 @@ class _draganddropScreenState extends State<draganddropScreen>
               children: [
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
+                  children: const [
                     Text(
                       "Progression",
                       style: TextStyle(
@@ -132,15 +132,15 @@ class _draganddropScreenState extends State<draganddropScreen>
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Container(
+                    const SizedBox(
                       width: 80,
                       child: Text(
                         'Anglais :',
                         style: TextStyle(fontSize: 18),
                       ),
                     ),
-                    SizedBox(width: 10),
-                    Container(
+                    const SizedBox(width: 10),
+                    SizedBox(
                       width: 200,
                       height: 20,
                       child: AnimatedBuilder(
@@ -150,28 +150,28 @@ class _draganddropScreenState extends State<draganddropScreen>
                             value: _animation1.value / 100,
                             backgroundColor: Colors.grey[300],
                             valueColor:
-                                AlwaysStoppedAnimation<Color>(Colors.red),
+                                const AlwaysStoppedAnimation<Color>(Colors.red),
                           );
                         },
                       ),
                     ),
-                    SizedBox(width: 10),
+                    const SizedBox(width: 10),
                     Text(scoreanglais.toString()),
                   ],
                 ),
-                SizedBox(height: 20),
+                const SizedBox(height: 20),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Container(
+                    const SizedBox(
                       width: 80,
                       child: Text(
                         'Français:',
                         style: TextStyle(fontSize: 18),
                       ),
                     ),
-                    SizedBox(width: 10),
-                    Container(
+                    const SizedBox(width: 10),
+                    SizedBox(
                       width: 200,
                       height: 20,
                       child: AnimatedBuilder(
@@ -180,29 +180,29 @@ class _draganddropScreenState extends State<draganddropScreen>
                           return LinearProgressIndicator(
                             value: _animation2.value / 100,
                             backgroundColor: Colors.grey[300],
-                            valueColor:
-                                AlwaysStoppedAnimation<Color>(Colors.green),
+                            valueColor: const AlwaysStoppedAnimation<Color>(
+                                Colors.green),
                           );
                         },
                       ),
                     ),
-                    SizedBox(width: 10),
+                    const SizedBox(width: 10),
                     Text(scorefrancais.toString()),
                   ],
                 ),
-                SizedBox(height: 20),
+                const SizedBox(height: 20),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Container(
+                    const SizedBox(
                       width: 80,
                       child: Text(
                         'Math :',
                         style: TextStyle(fontSize: 18),
                       ),
                     ),
-                    SizedBox(width: 10),
-                    Container(
+                    const SizedBox(width: 10),
+                    SizedBox(
                       width: 200,
                       height: 20,
                       child: AnimatedBuilder(
@@ -211,19 +211,19 @@ class _draganddropScreenState extends State<draganddropScreen>
                           return LinearProgressIndicator(
                             value: _animation3.value / 100,
                             backgroundColor: Colors.grey[300],
-                            valueColor:
-                                AlwaysStoppedAnimation<Color>(Colors.blue),
+                            valueColor: const AlwaysStoppedAnimation<Color>(
+                                Colors.blue),
                           );
                         },
                       ),
                     ),
-                    SizedBox(width: 10),
+                    const SizedBox(width: 10),
                     Text(scoremath.toString()),
                   ],
                 ),
               ],
             )
-          : CircularProgressIndicator(),
+          : const CircularProgressIndicator(),
     );
   }
 }

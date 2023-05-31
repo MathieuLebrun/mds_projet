@@ -1,25 +1,23 @@
 import 'dart:async';
 
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:video_player/video_player.dart';
 
 import './mainScreen.Dart';
 
-class coursScreenDesktop extends StatefulWidget {
-  coursScreenDesktop();
+class CoursScreenDesktop extends StatefulWidget {
+  const CoursScreenDesktop({super.key});
 
   @override
-  _coursScreenDesktopState createState() => _coursScreenDesktopState();
+  CoursScreenDesktopState createState() => CoursScreenDesktopState();
 }
 
-class _coursScreenDesktopState extends State<coursScreenDesktop> {
+class CoursScreenDesktopState extends State<CoursScreenDesktop> {
   bool _showButton = false;
 
   @override
   void initState() {
     super.initState();
-    Timer(Duration(minutes: 3), () {
+    Timer(const Duration(minutes: 3), () {
       setState(() {
         _showButton = true;
       });
@@ -48,9 +46,9 @@ class _coursScreenDesktopState extends State<coursScreenDesktop> {
                       context,
                       MaterialPageRoute(
                           builder: (context) =>
-                              mainScreen())); // action à effectuer lors du clic sur le bouton
+                              const mainScreen())); // action à effectuer lors du clic sur le bouton
                 },
-                child: Text("Retour a l'écran principal"),
+                child: const Text("Retour a l'écran principal"),
               ),
           ],
         ),
