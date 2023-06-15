@@ -5,24 +5,26 @@ import 'login.dart';
 
 class AccueilScreen extends StatefulWidget {
   // ? la je suis definie une methode obligatoire le changestep qui a un int "index" puis les deux string mdp login
-  AccueilScreen({
+  const AccueilScreen({
     Key? key,
   }) : super(key: key);
 
   @override
-  _AccueilScreenState createState() => _AccueilScreenState();
+  AccueilScreenState createState() => AccueilScreenState();
 }
 
-class _AccueilScreenState extends State<AccueilScreen> {
+class AccueilScreenState extends State<AccueilScreen> {
   @override
   void initState() {
     super.initState();
   }
 
+//View
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
           gradient: RadialGradient(
             colors: [
               Color(0xffffffff),
@@ -37,8 +39,8 @@ class _AccueilScreenState extends State<AccueilScreen> {
         child: Column(
           children: [
             Container(
-              margin: EdgeInsets.fromLTRB(0, 120, 0, 80),
-              child: Text(
+              margin: const EdgeInsets.fromLTRB(0, 120, 0, 80),
+              child: const Text(
                 "Z'heros",
                 style: TextStyle(
                     color: Colors.black,
@@ -48,13 +50,13 @@ class _AccueilScreenState extends State<AccueilScreen> {
               ),
             ),
             Container(
-              margin: EdgeInsets.fromLTRB(40, 0, 40, 0),
-              padding: EdgeInsets.only(bottom: 20),
-              decoration: BoxDecoration(
+              margin: const EdgeInsets.fromLTRB(40, 0, 40, 0),
+              padding: const EdgeInsets.only(bottom: 20),
+              decoration: const BoxDecoration(
                 border:
                     Border(bottom: BorderSide(color: Colors.black, width: 2)),
               ),
-              child: Text(
+              child: const Text(
                 "Devenez un Z'héros de la révision et rejoignez notre communauté de super-élèves ! Inscrivez-vous dès maintenant pour accéder à notre programme de révision ludique et efficace.",
                 style: TextStyle(
                     color: Colors.black,
@@ -63,10 +65,10 @@ class _AccueilScreenState extends State<AccueilScreen> {
                     height: 1.3),
               ),
             ),
-            SizedBox(height: 50),
+            const SizedBox(height: 50),
             Container(
               decoration: BoxDecoration(
-                gradient: RadialGradient(
+                gradient: const RadialGradient(
                   colors: [Color(0xffffffff), Color(0xFfcc55ea)],
                   center: Alignment.topLeft,
                   radius: 7.5,
@@ -79,7 +81,7 @@ class _AccueilScreenState extends State<AccueilScreen> {
                   Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => InscriptionScreen()));
+                          builder: (context) => const InscriptionScreen()));
                 },
                 style: ElevatedButton.styleFrom(
                   shape: RoundedRectangleBorder(
@@ -102,8 +104,10 @@ class _AccueilScreenState extends State<AccueilScreen> {
             const SizedBox(height: 10),
             ElevatedButton(
               onPressed: () {
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => LoginScreen()));
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const LoginScreen()));
               },
               style: ElevatedButton.styleFrom(
                 shape: RoundedRectangleBorder(

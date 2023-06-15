@@ -32,7 +32,7 @@ class StatistiqueScreenState extends State<StatistiqueScreen>
   @override
   void initState() {
     super.initState();
-
+    // Récupérer les scores lorsque l'écran est initialis
     recupScore();
   }
 
@@ -44,6 +44,7 @@ class StatistiqueScreenState extends State<StatistiqueScreen>
     super.dispose();
   }
 
+// Fonction asynchrone pour récupérer les scores depuis l'API
   Future<void> recupScore() async {
     accesstoken = (await PersistanceHandler().getTokenEDP())!;
     id = (await PersistanceHandler().getID())!;
@@ -76,7 +77,7 @@ class StatistiqueScreenState extends State<StatistiqueScreen>
     });
     setState(() {
       dataIsready = true;
-
+      // Initialiser les contrôleurs d'animation pour les barres de progression
       _controller1 = AnimationController(
         vsync: this,
         duration: const Duration(milliseconds: 2000),

@@ -49,10 +49,7 @@ class mainScreenState extends State<mainScreen> {
         title: Center(child: Text(currentMatiere)),
         backgroundColor: currentcolors,
         actions: [
-          PopupMenuButton(
-              // add icon, by default "3 dot" icon
-              // icon: Icon(Icons.book)
-              itemBuilder: (context) {
+          PopupMenuButton(itemBuilder: (context) {
             return [
               const PopupMenuItem<int>(
                 value: 0,
@@ -269,6 +266,7 @@ class mainScreenState extends State<mainScreen> {
     );
   }
 
+// Cette méthode est appelée lorsque l'un des éléments de la barre de navigation inférieure est sélectionné. Elle met à jour l'index sélectionné et effectue différentes actions en fonction de l'index sélectionné.
   void _onItemTapped(int index) {
     setState(() {
       selectedIndex = index;
@@ -318,6 +316,7 @@ class mainScreenState extends State<mainScreen> {
     });
   }
 
+  //Cette méthode renvoie un widget "FractionallySizedBox" contenant un widget "Image". Elle est utilisée pour afficher une image avec un facteur de largeur et de hauteur spécifique.
   Widget monWidget(widthFactor, heightFactor, pathimg) {
     return FractionallySizedBox(
       widthFactor: widthFactor * 1.35,
@@ -328,6 +327,7 @@ class mainScreenState extends State<mainScreen> {
     );
   }
 
+//Cette méthode affiche une boîte de dialogue lorsqu'elle est appelée. Elle affiche l'e-mail et le nom d'utilisateur, et fournit un bouton pour supprimer le compte utilisateur.
   void showDialogFunction(BuildContext context) {
     showDialog(
       context: context,
@@ -401,6 +401,7 @@ class mainScreenState extends State<mainScreen> {
     );
   }
 
+// Cette méthode envoie une requête à "APIService" pour supprimer le compte utilisateur. Si la requête est réussie (code de statut 200), elle efface les données persistantes et renvoie "true".
   Future<bool> _delUser() async {
     var usernames = await PersistanceHandler().getUsername();
 

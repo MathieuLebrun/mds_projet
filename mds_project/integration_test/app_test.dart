@@ -5,26 +5,42 @@ import 'package:mds_project/main.dart';
 
 void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
+
+  // Groupe de tests pour les scénarios de bout en bout
   group('end-to-end test', () {
+    // Test de connexion réussie
     testWidgets('Login bon', (WidgetTester tester) async {
       await tester.pumpWidget(const MyApp());
       await tester.pumpAndSettle();
-      final textFieldFinder1 = find.byKey(Key('email'));
-      final textFieldFinder = find.byKey(Key('mdp'));
+
+      // Recherche des champs de texte par leur clé
+      final textFieldFinder1 = find.byKey(const Key('email'));
+      final textFieldFinder = find.byKey(const Key('mdp'));
+
+      // Saisie des informations de connexion
       await tester.enterText(textFieldFinder1, 'teo@garbarinoo.co');
       await tester.enterText(textFieldFinder, '1234567');
-      final buttonFinder = find.byKey(Key('login'));
+
+      // Recherche et appui sur le bouton de connexion
+      final buttonFinder = find.byKey(const Key('login'));
       await tester.tap(buttonFinder);
     });
 
+    // Test de connexion échouée
     testWidgets('Login faux', (WidgetTester tester) async {
       await tester.pumpWidget(const MyApp());
       await tester.pumpAndSettle();
-      final textFieldFinder1 = find.byKey(Key('email'));
-      final textFieldFinder = find.byKey(Key('mdp'));
+
+      // Recherche des champs de texte par leur clé
+      final textFieldFinder1 = find.byKey(const Key('email'));
+      final textFieldFinder = find.byKey(const Key('mdp'));
+
+      // Saisie des informations de connexion incorrectes
       await tester.enterText(textFieldFinder1, 'teo@garbarinoo.co');
       await tester.enterText(textFieldFinder, '12367');
-      final buttonFinder = find.byKey(Key('login'));
+
+      // Recherche et appui sur le bouton de connexion
+      final buttonFinder = find.byKey(const Key('login'));
       await tester.tap(buttonFinder);
     });
   });

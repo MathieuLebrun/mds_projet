@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:mds_project/views/inscription.dart';
@@ -65,6 +63,7 @@ class LoginScreenState extends State<LoginScreen> {
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
+                      /*
                       ElevatedButton(
                         onPressed: () {
                           emailcontroller.text = "teo@garbarinoo.co";
@@ -75,7 +74,7 @@ class LoginScreenState extends State<LoginScreen> {
                               color: Color(0xFF505050),
                               fontFamily: 'Asdaen',
                             )),
-                      ),
+                      ),*/
                       const Text(
                         'Se connecter',
                         style: TextStyle(
@@ -114,6 +113,7 @@ class LoginScreenState extends State<LoginScreen> {
     );
   }
 
+// Affiche une boîte de dialogue avec un message d'erreur a la connexion
   Future<void> _showMyDialog() async {
     return showDialog<void>(
       context: context,
@@ -141,7 +141,8 @@ class LoginScreenState extends State<LoginScreen> {
     );
   }
 
-  Future<bool> _signInWithGoogle() async {
+// Méthode de connexion qui fait appelle a l'apiService
+  Future<bool> _signIn() async {
     LoginRequestModel model = LoginRequestModel(
       username: emailcontroller.text,
       password: mdpcontroller.text,
@@ -150,7 +151,7 @@ class LoginScreenState extends State<LoginScreen> {
     var response = await APIService.login(model);
     if (response.statusCode == 200) {
       var loginResponse = loginResponseJson(response.body);
-      inspect(loginResponse);
+      // stockage des données en persistance handler
       await PersistanceHandler().setTokenEDP(loginResponse.accesToken);
       await PersistanceHandler().setID(loginResponse.id);
       await PersistanceHandler().setUsername(loginResponse.username);
@@ -164,6 +165,7 @@ class LoginScreenState extends State<LoginScreen> {
   }
 
   Widget _buildEmailTF() {
+    /// Construit le champ de saisie pour l'e-mail
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
@@ -193,6 +195,7 @@ class LoginScreenState extends State<LoginScreen> {
   }
 
   Widget _buildPasswordTF() {
+    /// Construit le champ de saisie du mdp
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
@@ -222,6 +225,7 @@ class LoginScreenState extends State<LoginScreen> {
   }
 
   Widget _buildLoginBtn() {
+    /// Construit le bouton de btn
     return Container(
       padding: const EdgeInsets.symmetric(vertical: 25.0),
       width: double.infinity,
@@ -238,7 +242,7 @@ class LoginScreenState extends State<LoginScreen> {
           ),
         ),
         onPressed: () async => {
-          if (await _signInWithGoogle())
+          if (await _signIn())
             {
               Navigator.push(context,
                   MaterialPageRoute(builder: (context) => const mainScreen())),
@@ -280,6 +284,7 @@ class LoginScreenState extends State<LoginScreen> {
   }
 
   Widget _buildLogo() {
+    /// Construit le logo
     return Center(
         child: Image.asset(
       'assets/images/LogoAppMob.png', // Chemin relatif vers l'image
@@ -289,6 +294,7 @@ class LoginScreenState extends State<LoginScreen> {
   }
 
   Widget _buildSignupBtn() {
+    /// Construit l'affichage endessous le boutons
     return GestureDetector(
       onTap: () => Navigator.push(context,
           MaterialPageRoute(builder: (context) => const InscriptionScreen())),
