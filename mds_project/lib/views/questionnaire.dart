@@ -1,5 +1,3 @@
-// ignore_for_file: use_build_context_synchronously
-
 import 'package:flutter/material.dart';
 import 'package:mds_project/views/mainScreen.dart';
 import 'package:mds_project/services/api_service.dart';
@@ -26,12 +24,13 @@ class QuestionnaireState extends State<Questionnaire> {
   bool dataisready = false;
   @override
   void initState() {
-    // ? La méthode init state c'est une méthode lancer une seule fois quand on arriver dans une view donc au lancement dans l'app on va dans le gestionnaire puis cette methode utiliser qu'une fois
+    // C'est ici que l'on initialise les données nécessaires.
     super.initState();
     selectQuestionnaire();
   }
 
   void selectQuestionnaire() {
+    // Cette méthode sélectionne le questionnaire en fonction de la question transmise pars le main screen ex:si le joueur clique sur le bouton le 2eme niveau en ayant la matiere anglais selectionne cela va prendre le questionnaire anglais2
     switch (widget.question) {
       case "Math1":
         {
@@ -127,6 +126,8 @@ class QuestionnairePageState extends State<QuestionnairePage> {
   bool repondu = false;
 
   void _answerQuestion(int score) {
+    // Cette méthode est appelée lorsque l'utilisateur répond à une question.
+    // Elle met à jour le score et passe à la question suivante.
     setState(() {
       _score += score;
       _questionIndex++;
@@ -134,6 +135,8 @@ class QuestionnairePageState extends State<QuestionnairePage> {
   }
 
   void _resetQuestionnaire() {
+    // Cette méthode est appelée lorsque l'utilisateur souhaite recommencer le questionnaire.
+    // Elle réinitialise le score et l'index de la question.
     setState(() {
       _score = 0;
       _questionIndex = 0;
@@ -143,7 +146,9 @@ class QuestionnairePageState extends State<QuestionnairePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: _questionIndex < widget.questions.length
+      body: _questionIndex <
+              widget.questions
+                  .length // j'affiche le questionnaire tant qu'il reste des questions sinon j'affiche l'écran de résultat
           ? Quiz(
               questionIndex: _questionIndex,
               questions: widget.questions,
@@ -169,9 +174,10 @@ class Quiz extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
+        // Afficher la question actuelle
         Question(
           questions[questionIndex]['questionText'].toString(),
-        ),
+        ), // Créer une liste de widgets Answer en fonction des réponses disponibles pour la question actuelle
         ...(questions[questionIndex]['answers'] as List<Map<String, Object>>)
             .map((answer) {
           return Answer(
@@ -276,7 +282,6 @@ class Result extends StatelessWidget {
             onPressed: resetHandler,
             child: const Text("recommencer"),
           ),
-          // la ici rajouter le setteur du score et le button pour revenir a l'écran principal
           const SizedBox(height: 10),
           ElevatedButton(
               style: ElevatedButton.styleFrom(
@@ -285,15 +290,18 @@ class Result extends StatelessWidget {
               ),
               child: const Text("Je retourne dans l'écran principal"),
               onPressed: () async {
+                // Obtenir le token d'accès depuis PersistanceHandler
                 String? accesToken = await PersistanceHandler().getTokenEDP();
+                // Obtenir l'ID depuis PersistanceHandler
                 String? id = await PersistanceHandler().getID();
+                // Obtenir les scores depuis APIService
                 List<ScoreResponseModel> scores =
                     await APIService().getScores(id!, accesToken!);
-                scoreUpdated(score, scores, index, matiere);
 
+                // Créer le modèle ScoreModifyModel mis à jour
                 ScoreModifyModel? model =
                     scoreUpdated(score, scores, index, matiere);
-
+                // Appeler la méthode addOrUpdateScore de APIService pour ajouter ou mettre à jour le score
                 var response =
                     await APIService().addOrUpdateScore(id, accesToken, model!);
                 if (context.mounted) {
@@ -308,6 +316,7 @@ class Result extends StatelessWidget {
     );
   }
 
+// méthode récupérant le  score existant ou ajoute le score de la nouvelle matière
   ScoreModifyModel? scoreUpdated(
       int score, List<ScoreResponseModel> scores, int index, String matiere) {
     if (matiere.toLowerCase() == "math") {

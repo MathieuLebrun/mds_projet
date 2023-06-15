@@ -29,7 +29,7 @@ class coursScreenState extends State<coursScreen> {
       });
     });
     if (!kIsWeb) {
-      _controller = VideoPlayerController.asset('assets/video/math.mp4')
+      _controller = VideoPlayerController.asset('assets/video/revision.mp4')
         ..initialize().then((_) {
           setState(() {});
         });

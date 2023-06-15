@@ -1,4 +1,6 @@
 import 'package:shared_preferences/shared_preferences.dart';
+//Le code  utilise le package shared_preferences pour gérer la persistance des données.
+// Ce package permet de stocker des données de manière persistante sur le périphérique de l'utilisateur.
 
 class PersistanceHandler {
   Future<String> setTokenEDP(String value) async {
@@ -45,6 +47,7 @@ class PersistanceHandler {
     return prefs.getString("email");
   }
 
+  // Permets de vider le persistance handler a la déconnexion
   void clearPersistentData() async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
     preferences.clear();

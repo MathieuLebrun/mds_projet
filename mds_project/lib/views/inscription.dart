@@ -34,6 +34,7 @@ class InscriptionScreenState extends State<InscriptionScreen> {
     dropdownValue = listDropDownWhereToSend[0];
   }
 
+//View
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -140,6 +141,9 @@ class InscriptionScreenState extends State<InscriptionScreen> {
     );
   }
 
+  //Controleurs
+
+//Fonction qui construit le champs Email
   Widget _buildEmailTF() {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -167,8 +171,10 @@ class InscriptionScreenState extends State<InscriptionScreen> {
     );
   }
 
-  Future<bool> _signInWithGoogle() async {
+//Fonction qui valide l'inscriptions
+  Future<bool> _register() async {
     int valeurclasse = 3;
+    // dans un premier temps je recupére la valeur du dropdown
     switch (int.parse(dropdownValue[0])) {
       case 5:
         {
@@ -198,26 +204,29 @@ class InscriptionScreenState extends State<InscriptionScreen> {
         }
         break;
     }
-
+    // je crée un model avec les données de chaque controleur
     RegisterRequestModel model = RegisterRequestModel(
       username: mdpusername.text,
       password: mdpcontroller.text,
       email: emailcontroller.text,
       classe: valeurclasse.toString(),
     );
-
-    String marcel = await APIService.register(model);
-    if (marcel != "404") {
+    //j'effectue la requete depuis la classe api service
+    String response = await APIService.register(model);
+    if (response != "404") {
+      // si le status code et bon j'affiche une notifications validée
       showInSnackBar("✅");
       if (context.mounted) {
+        // et je passe a l'écran de connexion
         Navigator.push(
           context,
           MaterialPageRoute(builder: (context) => const LoginScreen()),
         );
       }
     } else {
-      messageErreur = "Erreur de connexion ";
-      showInSnackBar(messageErreur);
+      messageErreur = "Erreur d'inscriptions ";
+      showInSnackBar(
+          messageErreur); //sinon j'affiche une notifications d'erreurs
       return false;
     }
 
@@ -297,6 +306,7 @@ class InscriptionScreenState extends State<InscriptionScreen> {
     );
   }
 
+//construction du bouton inscription
   Widget _buildInscInBtn() {
     return Container(
       padding: const EdgeInsets.symmetric(vertical: 25.0),
@@ -307,7 +317,7 @@ class InscriptionScreenState extends State<InscriptionScreen> {
         ),
         // elevation: 5.0,
         onPressed: () async => {
-          if (await _signInWithGoogle())
+          if (await _register())
             {MaterialPageRoute(builder: (context) => const LoginScreen())}
           else
             {},
@@ -331,6 +341,7 @@ class InscriptionScreenState extends State<InscriptionScreen> {
     );
   }
 
+//remplissage des années dans la liste du dropdown
   void setDropDownWhereToSend() {
     listDropDownWhereToSend.add("6ème");
     listDropDownWhereToSend.add("5ème");
@@ -338,6 +349,7 @@ class InscriptionScreenState extends State<InscriptionScreen> {
     listDropDownWhereToSend.add("3ème");
   }
 
+//Methode construction drop down des années
   Widget _buildAnn() {
     return Container(
       alignment: Alignment.centerLeft,

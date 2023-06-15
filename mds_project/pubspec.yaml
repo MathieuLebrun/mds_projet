@@ -82,6 +82,7 @@ flutter:
     - assets/images/Etoileblock.png
     - assets/images/LogoAppMobLaunch.png
     - assets/images/courslogo.png
+    - assets/video/revision.mp4
 
   # To add assets to your application, add an assets section, like this:
   # assets:
